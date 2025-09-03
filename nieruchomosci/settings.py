@@ -87,7 +87,7 @@ if not _DB_URL:
 
 DATABASES = {
     "default": dj_database_url.config(
-        default=f"ppostgresql://postgres:HLofOUuncDNWONKnPhOdJheaUPWcrfWO@turntable.proxy.rlwy.net:24544/railway"
+        default=f"postgresql://postgres:HLofOUuncDNWONKnPhOdJheaUPWcrfWO@turntable.proxy.rlwy.net:24544/railway"
     )
 }
 
