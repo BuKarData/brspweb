@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "oferty",
     "rest_framework",
+    "drf_yasg",
 ]
 
 # Middleware

@@ -128,3 +128,44 @@ def safe_float(value):
         return float(str(value).replace(" ", "").replace(",", ""))
     except (ValueError, TypeError):
         return None
+
+from django.http import HttpResponse
+from oferty.models import Oferta
+import json
+
+def raport_jsonl(request):
+    dane_dewelopera = {
+        "nip": "8261116680",
+        "regon": "540649478",
+        "nazwa_firmy": "B.Z-BUD Beata Żochowska",
+        "adres_biura": "woj. MAZOWIECKIE, pow. wołomiński, gm. Zielonka, miejsc. Zielonka, ul. Ignacego Paderewskiego, nr 61, 05-220"
+    }
+
+    oferty = Oferta.objects.prefetch_related(
+        "ceny", "inwestycja", "pomieszczenia_przynalezne", "rabaty", "inne_swiadczenia"
+    ).all()
+
+    raport_lines = []
+    for oferta in oferty:
+        ceny_list = list(oferta.ceny.all())
+        ostatnia_cena = ceny_list[-1] if ceny_list else None
+        cena_m2 = round(float(ostatnia_cena.kwota)/float(oferta.metraz), 2) if ostatnia_cena and oferta.metraz else None
+
+        rekord = {
+            "deweloper": dane_dewelopera,
+            "oferta": {
+                "id": oferta.id,
+                "numer_lokalu": oferta.numer_lokalu,
+                "numer_oferty": oferta.numer_oferty if hasattr(oferta, 'numer_oferty') else None,
+                "metraz": float(oferta.metraz) if oferta.metraz else None,
+                "pokoje": oferta.pokoje,
+                "status": oferta.status,
+                "cena": float(ostatnia_cena.kwota) if ostatnia_cena else None,
+                "cena_za_m2": cena_m2,
+                "data_ceny": ostatnia_cena.data.isoformat() if ostatnia_cena else None
+            }
+        }
+        raport_lines.append(json.dumps(rekord, ensure_ascii=False))
+
+    payload = "\n".join(raport_lines)
+    return HttpResponse(payload, content_type="application/x-json-stream; charset=utf-8")
