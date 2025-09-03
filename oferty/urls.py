@@ -4,7 +4,8 @@ from oferty import views
 from django.conf import settings
 from django.conf.urls.static import static
 from .api_views import InwestycjaListAPIView, OfertaListAPIView, CenaListAPIView, APISchemaView
-
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+from drf_spectacular.renderers import JSONOpenAPIRenderer
 
 urlpatterns = [
     path('', views.home, name='home'),

@@ -3,6 +3,7 @@ from drf_spectacular.views import SpectacularAPIView
 from .models import Inwestycja, Oferta, Cena
 from .serializers import InwestycjaSerializer, OfertaSerializer, CenaSerializer
 
+
 # OpenAPI schema endpoint
 class APISchemaView(SpectacularAPIView):
     pass
