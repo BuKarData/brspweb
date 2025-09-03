@@ -44,8 +44,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('oferty.urls')),  
     path("oferty/", include("oferty.urls")),
-    path('api/raport/', include('oferty.urls_api')), 
     path('health/', health, name='health'),
+    path('api/raport/', include('oferty.urls_api')),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('swagger.json', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('swagger.yaml', schema_view.without_ui(
