@@ -24,15 +24,5 @@ class SpectacularInlineAPIView(SpectacularAPIView):
         response['Content-Disposition'] = 'inline' 
         return response
 
-
-urlpatterns = [
-    path('', views.home, name='home'),
-    path('oferty/', views.lista_ofert, name='lista_ofert'),
-    path('api/oferty/', OfertyAPIView.as_view(), name='api-oferty'),
-    path('api/schema/', SpectacularInlineJSONAPIView.as_view(), name='api-schema'),
-    path('api/docs/', SpectacularSwaggerView.as_view(url_name='api-schema'), name='api-docs'),
-]
-
-
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
