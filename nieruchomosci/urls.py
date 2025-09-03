@@ -25,7 +25,7 @@ from drf_yasg import openapi
 
 schema_view = get_schema_view(
    openapi.Info(
-      title="Oferty firmy Braspol",
+      title="API Oferty",
       default_version='v1',
       description="Raporty ofert dla dane.gov.pl",
    ),
