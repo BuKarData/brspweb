@@ -6,6 +6,14 @@ from django.conf.urls.static import static
 from .api_views import OfertyAPIView
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
+
+class SpectacularInlineAPIView(SpectacularAPIView)
+    def get(self,request, *args, **kwargs)
+        response = super().get(request,*args,**kwargs)
+        response['Content-Disposition'] = 'inline' 
+        return response
+
+
 urlpatterns = [
     path('', views.home, name='home'),
     path('oferty/', views.lista_ofert, name='lista_ofert'),
