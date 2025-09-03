@@ -22,7 +22,11 @@ from django.conf.urls.static import static
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
-from drf_yasg.renderers import OpenAPIRenderer, SwaggerUIRenderer
+from django.http import HttpResponse
+
+
+def health(request):
+    return HttpResponse("OK")
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -40,6 +44,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('oferty.urls')),  
     path("oferty/", include("oferty.urls")),
+    path('api/raport/', include('oferty.urls_api')), 
+    path('health/', health, name='health'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('swagger.json', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('swagger.yaml', schema_view.without_ui(
@@ -47,10 +53,6 @@ urlpatterns = [
     ), name='schema-yaml'),
 ]
 
-urlpatterns += [
-    path('swagger.json', schema_view.without_ui(renderer_classes=[OpenAPIRenderer]), name='schema-json'),
-    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-]
 
 
 
