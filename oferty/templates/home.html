@@ -212,10 +212,10 @@
       <!-- Karuzela inwestycji -->
       <div id="carouselInwestycje" class="carousel slide mb-5" data-bs-ride="carousel">
         <div class="carousel-inner">
-          {% for inwestycja in inwestycje %}
+          {% zdj in inwestycja.zdjecia.all %}
             <div class="carousel-item {% if forloop.first %}active{% endif %}">
               {% if inwestycja.zdjecie %}
-                <img src="{{ inwestycja.zdjecie.url }}" class="d-block w-100" style="height:400px; object-fit:cover;" alt="{{ inwestycja.nazwa }}">
+                <img src="{{ zdj.obraz.url }}" class="d-block w-100" style="height:400px; object-fit:cover;" alt="{{ inwestycja.nazwa }}">
               {% else %}
                 <img src="{% static 'no-image.jpg' %}" class="d-block w-100" style="height:400px; object-fit:cover;" alt="Brak zdjęcia">
               {% endif %}
