@@ -35,7 +35,7 @@ urlpatterns = [
     path('api/oferty/', OfertaListAPIView.as_view(), name='api-oferty'),
     path('api/ceny/', CenaListAPIView.as_view(), name='api-ceny'),
     path('api/schema/', SpectacularInlineAPIView.as_view(), name='api-schema'),
-    path('api', api_root, name='api-root')
+    path('api/', api_root, name='api-root')
 ]
 
 if settings.DEBUG:
