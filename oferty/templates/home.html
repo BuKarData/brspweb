@@ -207,35 +207,34 @@
     <h1 class="text-center">Braspol</h1>
     <p class="text-center text-muted">STRONA W BUDOWIE - OFERTY TESTOWE - Budujemy dla Ciebie.</p>
 
-    <div class="container mt-5">
+  <div class="container mt-5">
 
-      <!-- Karuzela inwestycji -->
-      <div id="carouselInwestycje" class="carousel slide mb-5" data-bs-ride="carousel">
-        <div class="carousel-inner">
-          {% zdj in inwestycja.zdjecia.all %}
-            <div class="carousel-item {% if forloop.first %}active{% endif %}">
-              {% if inwestycja.zdjecie %}
-                <img src="{{ zdj.obraz.url }}" class="d-block w-100" style="height:400px; object-fit:cover;" alt="{{ inwestycja.nazwa }}">
-              {% else %}
-                <img src="{% static 'no-image.jpg' %}" class="d-block w-100" style="height:400px; object-fit:cover;" alt="Brak zdjęcia">
-              {% endif %}
-              <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
-                <h5>{{ inwestycja.nazwa }}</h5>
-                <p class="mb-0">{{ inwestycja.adres }}</p>
-              </div>
-            </div>
-          {% endfor %}
+  <!-- Karuzela inwestycji -->
+  <div id="carouselInwestycje" class="carousel slide mb-5" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      {% for inwestycja in inwestycje %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+          {% if inwestycja.zdjecie %}
+            <img src="{{ inwestycja.zdjecie.url }}" class="d-block w-100" style="height:400px; object-fit:cover;" alt="{{ inwestycja.nazwa }}">
+          {% else %}
+            <img src="{% static 'no-image.jpg' %}" class="d-block w-100" style="height:400px; object-fit:cover;" alt="Brak zdjęcia">
+          {% endif %}
+          <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
+            <h5>{{ inwestycja.nazwa }}</h5>
+            <p class="mb-0">{{ inwestycja.adres }}</p>
+          </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselInwestycje" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Poprzedni</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselInwestycje" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Następny</span>
-        </button>
-      </div>
- 
+      {% endfor %}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselInwestycje" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Poprzedni</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselInwestycje" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Następny</span>
+    </button>
+  </div>
 
     <h1 class="text-center mb-4">Nasze inwestycje</h1>
 
