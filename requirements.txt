@@ -15,3 +15,4 @@ flask-restx
 apispec
 apispec-webframeworks
 marshmallow
+drf-yasg>=1.21.5
