@@ -147,25 +147,63 @@ def raport_jsonl(request):
 
     raport_lines = []
     for oferta in oferty:
+        # Pomijanie ofert bez inwestycji lub ceny
+        if not oferta.inwestycja or not oferta.inwestycja.unikalny_identyfikator_przedsiewziecia:
+            continue
         ceny_list = list(oferta.ceny.all())
-        ostatnia_cena = ceny_list[-1] if ceny_list else None
-        cena_m2 = round(float(ostatnia_cena.kwota)/float(oferta.metraz), 2) if ostatnia_cena and oferta.metraz else None
+        if not ceny_list:
+            continue
 
-        rekord = {
-            "deweloper": dane_dewelopera,
+        ostatnia_cena = ceny_list[-1]
+        cena_m2 = round(float(ostatnia_cena.kwota)/float(oferta.metraz), 2) if oferta.metraz else None
+
+        rekord_oferty = {
+            "deweloper": {
+                "nip": dane_dewelopera["nip"],
+                "regon": dane_dewelopera["regon"],
+                "nazwa_firmy": dane_dewelopera["nazwa_firmy"],
+            },
+            "inwestycja": {
+                "unikalny_identyfikator": oferta.inwestycja.unikalny_identyfikator_przedsiewziecia,
+                "numer_pozwolenia_na_budowe": oferta.inwestycja.numer_pozwolenia,
+                "termin_rozpoczecia": oferta.inwestycja.termin_rozpoczecia.isoformat() if oferta.inwestycja.termin_rozpoczecia else None,
+                "termin_zakonczenia": oferta.inwestycja.termin_zakonczenia.isoformat() if oferta.inwestycja.termin_zakonczenia else None,
+            },
             "oferta": {
                 "id": oferta.id,
                 "numer_lokalu": oferta.numer_lokalu,
                 "numer_oferty": oferta.numer_oferty if hasattr(oferta, 'numer_oferty') else None,
+                "rodzaj_lokalu": oferta.rodzaj_lokalu.nazwa if oferta.rodzaj_lokalu else None,
                 "metraz": float(oferta.metraz) if oferta.metraz else None,
                 "pokoje": oferta.pokoje,
                 "status": oferta.status,
-                "cena": float(ostatnia_cena.kwota) if ostatnia_cena else None,
+                "cena": float(ostatnia_cena.kwota),
                 "cena_za_m2": cena_m2,
                 "data_ceny": ostatnia_cena.data.isoformat() if ostatnia_cena else None
+            },
+            "dodatkowe_oplaty": {
+                "pomieszczenia_przynaleznie": [
+                    {"nazwa": p.nazwa, "cena": float(p.cena)} 
+                    for p in oferta.pomieszczenia_przynalezne.all()
+                ],
+                "rabaty_i_promocje": [
+                    {
+                        "nazwa": r.nazwa,
+                        "wartosc": float(r.wartosc),
+                        "typ": r.typ,
+                        "data_od": r.data_od.isoformat(),
+                        "data_do": r.data_do.isoformat()
+                    } 
+                    for r in oferta.rabaty.all()
+                ],
+                "inne_swiadczenia": [
+                    {"nazwa": s.nazwa, "kwota": float(s.kwota)} 
+                    for s in oferta.inne_swiadczenia.all()
+                ]
             }
         }
-        raport_lines.append(json.dumps(rekord, ensure_ascii=False))
+
+        raport_lines.append(json.dumps(rekord_oferty, ensure_ascii=False))
 
     payload = "\n".join(raport_lines)
     return HttpResponse(payload, content_type="application/x-json-stream; charset=utf-8")
