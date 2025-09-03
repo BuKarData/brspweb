@@ -39,12 +39,6 @@ INSTALLED_APPS = [
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
-    ],
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ],
 }
 
 
@@ -52,7 +46,7 @@ SPECTACULAR_SETTINGS = {
     'TITLE': 'Oferty Braspol',
     'DESCRIPTION': 'Raporty ofert dla dane.gov.pl',
     'VERSION': 'v1',
-    'SERVE_INCLUDE_SCHEMA': False,
+    'SERVE_INCLUDE_SCHEMA': False,  
 }
 
 

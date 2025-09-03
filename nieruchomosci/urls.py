@@ -24,7 +24,6 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from django.http import HttpResponse
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
-from rest_framework.renderers import JSONOpenAPIRenderer
 
 def health(request):
     return HttpResponse("OK")
@@ -46,12 +45,8 @@ urlpatterns = [
     path('', include('oferty.urls')),  
     path("oferty/", include("oferty.urls")),
     path('health/', health, name='health'),
-    #path('api/raport/', include('oferty.urls_api')),
-       # path('schema/', SpectacularAPIView.as_view(
-       # renderer_classes=[JSONOpenAPIRenderer]
-    #), name='schema'),
-    path('schema/', SpectacularAPIView.as_view(), name='schema'),
-    path('swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('schema/', SpectacularAPIView.as_view(), name='schema'),  # JSON OpenAPI 3.x
+    path('swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),  # UI tylko do podglądu
 ]
 
 
