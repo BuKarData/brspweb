@@ -6,6 +6,16 @@ from django.conf.urls.static import static
 from .api_views import OfertyAPIView
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework.renderers import JSONOpenAPIRenderer
+from django.urls import path
+from .api_views import InwestycjaListAPIView
+
+urlpatterns = [
+    path('', views.home, name='home'),
+    path('oferty/', views.lista_ofert, name='lista_ofert'),
+
+    # API
+    path("api/inwestycje/", InwestycjaListAPIView.as_view(), name="api-inwestycje"),
+]
 
 
 class SpectacularInlineAPIView(SpectacularAPIView):

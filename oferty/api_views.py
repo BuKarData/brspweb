@@ -5,6 +5,15 @@ from .models import Oferta, Cena
 from django.db.models import Prefetch
 from .serializers import OfertaSerializer
 from rest_framework.generics import ListAPIView
+from rest_framework import generics
+from .models import Inwestycja
+from .serializers import InwestycjaSerializer
+
+class InwestycjaListAPIView(generics.ListAPIView):
+    queryset = Inwestycja.objects.all()
+    serializer_class = InwestycjaSerializer
+
+
 
 
 class OfertyAPIView(ListAPIView):
