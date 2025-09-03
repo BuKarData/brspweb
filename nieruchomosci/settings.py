@@ -127,6 +127,10 @@ LANGUAGES = [
 
 ]
 
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]
+
 #  Pliki statyczne
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
