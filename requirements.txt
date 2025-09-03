@@ -5,7 +5,7 @@ whitenoise
 djangorestframework
 psycopg2-binary  
 Pillow>=10.0.0
-drf-spectacular
+drf-spectacular>=0.28.1,<1
 fastapi==0.104.1
 uvicorn[standard]==0.24.0
 python-multipart==0.0.6
@@ -15,6 +15,5 @@ flask-restx
 apispec
 apispec-webframeworks
 marshmallow
-drf-yasg>=1.21.5
 requests>=2.30
 jsonlines>=3.1.0
