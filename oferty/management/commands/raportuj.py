@@ -20,7 +20,7 @@ class Command(BaseCommand):
             os.makedirs(raporty_dir)
 
         data_raportu = str(date.today())
-        nazwa_pliku = f"{raporty_dir}/Raport ofert firmy Braspol_{data_raportu}.csv"
+        nazwa_pliku = f"{raporty_dir}/Raport ofert firmy BZ-Bud_{data_raportu}.csv"
 
         # Ustalenie maksymalnej liczby elementów w listach
         max_pom = max((oferta.pomieszczenia_przynalezne.count() for oferta in oferty), default=0)
