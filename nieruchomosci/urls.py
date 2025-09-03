@@ -19,28 +19,19 @@ from django.urls import path, include
 from django.conf import settings
 from oferty import views
 from django.conf.urls.static import static
-from django.conf.urls.i18n import i18n_patterns
-from drf_spectacular.views import (
-    SpectacularAPIView,
-    SpectacularSwaggerView,
-    SpectacularRedocView,
-)
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('oferty.urls')),  
-    path('', include('nieruchomosci.urls')),
-    path('api/schema/', SpectacularAPIView.as_view(), name='api-schema'),
-    path('api/docs/', SpectacularSwaggerView.as_view(url_name='api-schema'), name='api-docs'),
-    path('api/redoc/', SpectacularRedocView.as_view(url_name='api-schema'), name='api-redoc'),
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
 ]
 
 
-urlpatterns += i18n_patterns(
-    path('', views.home, name='home'),
-    path('oferty/', views.lista_ofert, name='lista_ofert'),
-)
+
 
 
 if settings.DEBUG:
