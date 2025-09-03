@@ -9,7 +9,7 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 
 class SpectacularInlineAPIView(SpectacularAPIView):
-    def get(self,request, *args, **kwargs)
+    def get(self,request, *args, **kwargs):
         response = super().get(request,*args,**kwargs)
         response['Content-Disposition'] = 'inline' 
         return response
