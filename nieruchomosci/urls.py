@@ -23,7 +23,7 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from django.http import HttpResponse
-
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 def health(request):
     return HttpResponse("OK")
@@ -46,11 +46,8 @@ urlpatterns = [
     path("oferty/", include("oferty.urls")),
     path('health/', health, name='health'),
     path('api/raport/', include('oferty.urls_api')),
-    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    path('swagger.json', schema_view.without_ui(cache_timeout=0), name='schema-json'),
-    path('swagger.yaml', schema_view.without_ui(
-        cache_timeout=0,
-    ), name='schema-yaml'),
+    path('schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
 ]
 
 
