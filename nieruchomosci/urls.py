@@ -42,7 +42,6 @@ urlpatterns = [
     path('swagger.json', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('swagger.yaml', schema_view.without_ui(
         cache_timeout=0,
-        renderer_classes=[OpenAPIRenderer]  
     ), name='schema-yaml'),
 ]
 
