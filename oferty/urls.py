@@ -3,12 +3,12 @@ from django.urls import path, include
 from oferty import views
 from django.conf import settings
 from django.conf.urls.static import static
-#from .api_views import OfertyAPIView
+from .api_views import OfertyAPIView
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 
 
-class SpectacularInlineAPIView(SpectacularAPIView)
+class SpectacularInlineAPIView(SpectacularAPIView):
     def get(self,request, *args, **kwargs)
         response = super().get(request,*args,**kwargs)
         response['Content-Disposition'] = 'inline' 
