@@ -25,12 +25,15 @@ from drf_yasg import openapi
 
 schema_view = get_schema_view(
    openapi.Info(
-      title="API Oferty",
+      title="Oferty Braspol",
       default_version='v1',
       description="Raporty ofert dla dane.gov.pl",
    ),
    public=True,
    permission_classes=(permissions.AllowAny,),
+   generator_class=None,
+   authentication_classes=[],
+   openapi_version="3.0.2",
 )
 
 

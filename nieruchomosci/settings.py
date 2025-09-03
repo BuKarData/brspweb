@@ -91,6 +91,13 @@ if not _DB_URL:
     # WOLNO użyć SQLite TYLKO lokalnie. Na produkcji to skasuj!
     _DB_URL = "sqlite:///db.sqlite3"
 
+SWAGGER_SETTINGS = {
+    'DEFAULT_INFO': 'nieruchomosci.urls.schema_view',  # ścieżka do Twojego schema_view
+    'USE_SESSION_AUTH': False,
+    'VALIDATOR_URL': None,
+}
+
+YASG_OPENAPI = '3.0.2'  # wymuszenie OpenAPI 3
 
 
 DATABASES = {
