@@ -12,13 +12,13 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "super-secret-key")
 DEBUG = os.environ.get("DEBUG", "True") == "True"
 
 #  Dozwolone hosty (na Railway najlepiej *)
-ALLOWED_HOSTS = ["bzbud.pl", "www.bzbud.pl", "0s2qosca.up.railway.app", 'web-production-48d26.up.railway.app']
+ALLOWED_HOSTS = ["braspol.pl", "www.braspol.pl", "0s2qosca.up.railway.app", 'brspweb-production.up.railway.app']
 
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://www.bzbud.pl",
-    "https://bzbud.pl",
-    "https://web-production-48d26.up.railway.app",  #dla testów
+    "https://www.braspol.pl",
+    "https://braspol.pl",
+    "https://brspweb-production.up.railway.app",  #dla testów
 ]
 
 # Aplikacje
@@ -87,7 +87,7 @@ if not _DB_URL:
 
 DATABASES = {
     "default": dj_database_url.config(
-        default=f"postgresql://postgres:eYNuwYIcdwUdrxoIPBVmaoWWCYmIFfHK@yamanote.proxy.rlwy.net:15701/railway"
+        default=f"ppostgresql://postgres:HLofOUuncDNWONKnPhOdJheaUPWcrfWO@turntable.proxy.rlwy.net:24544/railway"
     )
 }
 
