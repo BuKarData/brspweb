@@ -180,3 +180,4 @@ def raport_jsonl(request):
         raport_lines.append(rekord_oferty)
 
     return Response(raport_lines)
+
