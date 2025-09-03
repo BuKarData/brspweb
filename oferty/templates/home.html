@@ -282,7 +282,7 @@ z-index: 1;
           {% if inwestycja.opis %}
             <p class="mb-3">{{ inwestycja.opis|linebreaksbr}}</p>
           {% endif %}
-          <button class="btn btn-primary btn-sm" onclick="showPopup('popup-{{ inwestycja.id }}')">Szczegóły inwestycji</button>
+          <button class="btn-hover-fill" onclick="showPopup('popup-{{ inwestycja.id }}')">Szczegóły inwestycji</button>
         </div>
 
         <div class="inwestycja-img">
