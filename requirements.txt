@@ -16,3 +16,5 @@ apispec
 apispec-webframeworks
 marshmallow
 drf-yasg>=1.21.5
+requests>=2.30
+jsonlines>=3.1.0

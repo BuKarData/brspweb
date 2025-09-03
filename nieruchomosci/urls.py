@@ -19,12 +19,27 @@ from django.urls import path, include
 from django.conf import settings
 from oferty import views
 from django.conf.urls.static import static
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
+schema_view = get_schema_view(
+   openapi.Info(
+      title="API Oferty",
+      default_version='v1',
+      description="Raporty ofert dla dane.gov.pl",
+   ),
+   public=True,
+   permission_classes=(permissions.AllowAny,),
+)
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('oferty.urls')),  
     path("oferty/", include("oferty.urls")),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+]
 ]
 
 
