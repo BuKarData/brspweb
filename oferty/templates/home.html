@@ -215,11 +215,12 @@
 .btn-hover-fill span {
 position: relative;
 z-index: 1;
+transition: color 0.3s ease-in-out;
 }
 
-.btn-hover-fill:hover,
-.btn-hover-fill:active {
-  color: #fff !important;
+.btn-hover-fill:hover span,
+.btn-hover-fill:active span{
+  color: #fff
 }
 
   </style>
@@ -282,7 +283,7 @@ z-index: 1;
           {% if inwestycja.opis %}
             <p class="mb-3">{{ inwestycja.opis|linebreaksbr}}</p>
           {% endif %}
-          <button class="btn-hover-fill" onclick="showPopup('popup-{{ inwestycja.id }}')">Szczegóły inwestycji</button>
+          <button class="btn-hover-fill btn-sm" onclick="showPopup('popup-{{ inwestycja.id }}')">Szczegóły inwestycji</button>
         </div>
 
         <div class="inwestycja-img">
