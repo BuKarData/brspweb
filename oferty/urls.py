@@ -5,11 +5,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 from .api_views import InwestycjaListAPIView, OfertaListAPIView, CenaListAPIView, APISchemaView
 from drf_spectacular.views import SpectacularAPIView
-from drf_spectacular.renderers import JSONOpenAPIRenderer
 
 
 class SpectacularInlineAPIView(SpectacularAPIView):
-    renderer_classes=[JSONOpenAPIRenderer]
 
     def get(self,request, *args, **kwargs):
         response = super().get(request,*args,**kwargs)
