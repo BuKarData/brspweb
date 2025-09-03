@@ -52,10 +52,9 @@ SPECTACULAR_SETTINGS = {
     'TITLE': 'Oferty Braspol',
     'DESCRIPTION': 'Raporty ofert dla dane.gov.pl',
     'VERSION': 'v1',
-    'SERVERS': [
-        {'url': 'https://brspweb-production.up.railway.app'}
-    ],
+    'SERVE_INCLUDE_SCHEMA': False,
 }
+
 
 
 # Middleware

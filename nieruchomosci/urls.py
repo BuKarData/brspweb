@@ -46,10 +46,11 @@ urlpatterns = [
     path('', include('oferty.urls')),  
     path("oferty/", include("oferty.urls")),
     path('health/', health, name='health'),
-    path('api/raport/', include('oferty.urls_api')),
-        path('schema/', SpectacularAPIView.as_view(
-        renderer_classes=[JSONOpenAPIRenderer]
-    ), name='schema'),
+    #path('api/raport/', include('oferty.urls_api')),
+       # path('schema/', SpectacularAPIView.as_view(
+       # renderer_classes=[JSONOpenAPIRenderer]
+    #), name='schema'),
+    path('schema/', SpectacularAPIView.as_view(), name='schema'),
     path('swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
 ]
 
