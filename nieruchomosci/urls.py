@@ -20,31 +20,18 @@ from django.conf import settings
 from oferty import views
 from django.conf.urls.static import static
 from rest_framework import permissions
-from drf_yasg.views import get_schema_view
-from drf_yasg import openapi
 from django.http import HttpResponse
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 def health(request):
     return HttpResponse("OK")
 
-schema_view = get_schema_view(
-   openapi.Info(
-      title="Oferty Braspol",
-      default_version='v1',
-      description="Raporty ofert dla dane.gov.pl",
-   ),
-   public=True,
-   permission_classes=(permissions.AllowAny,),
-)
-
-
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('oferty.urls')),  
     path("oferty/", include("oferty.urls")),
     path('health/', health, name='health'),
+    path('api/raport/', include('oferty.urls_api')),
     path('schema/', SpectacularAPIView.as_view(), name='schema'),  # JSON OpenAPI 3.x
     path('swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),  # UI tylko do podglądu
 ]
