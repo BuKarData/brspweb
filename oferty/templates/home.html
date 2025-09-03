@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="pl">
+{% load static %}
+{% load math_filters %}
+
+<head>
+  <meta charset="UTF-8">
+  <title>BZBUD Deweloper Zielonka</title>
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+  />
+  <style>
+    body, html { margin:0; padding:0; height:100%; }
+    .hero { display:flex; justify-content:center; align-items:center; flex-direction:column; text-align:center; }
+
+    .status-dostępne { color: green; font-weight:bold; }
+    .status-rezerwacja { color: orange; font-weight:bold; }
+    .status-sprzedane { color: red; font-weight:bold; }
+
+    .inwestycja-box {
+      background: #f9f9f9;
+      margin-bottom: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .inwestycja-img img {
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      cursor: pointer;
+      transition: transform 0.3s;
+      max-width: 300px;
+      max-height: 200px;
+      object-fit: cover;
+    }
+    .inwestycja-img img:hover { transform: scale(1.02); }
+
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+    }
+    .popup-content {
+      background: #fff;
+      padding: 30px;
+      width: 80%;
+      max-width: 700px;
+      border-radius: 16px;
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    .popup-content h3 { text-align: center; margin-bottom: 20px; font-weight: bold; }
+    .popup-content ul { list-style: none; padding: 0; }
+    .popup-content li { margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #eee; }
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 28px;
+      color: #666;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .close:hover { color: #000; }
+    @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+
+    /* Modal dla powiększonego zdjęcia */
+    .image-modal {
+      display: none;
+      position: fixed;
+      z-index: 3000;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.9);
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    .image-modal img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      transform: scale(0.9);
+      opacity: 0;
+      transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    }
+    .image-modal.show img {
+      transform: scale(1);
+      opacity: 1;
+    }
+    .image-modal .close-modal {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: #fff;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Zdjęcie w popupie */
+    .popup-img {
+      max-width: 350px;
+      max-height: 220px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .popup-img:hover { transform: scale(1.02); }
+
+    .gallery-container {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.gallery-wrapper {
+  scroll-behavior: smooth;
+  gap: 12px;
+  padding: 8px 0;
+}
+
+.gallery-thumb {
+  flex: 0 0 auto;
+  width: 140px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.gallery-thumb:hover {
+  transform: scale(1.05);
+}
+
+.gallery-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.8);
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: background 0.3s;
+}
+.gallery-arrow:hover {
+  background: rgba(255,255,255,1);
+}
+.gallery-arrow.left { left: -20px; }
+.gallery-arrow.right { right: -20px; }
+
+.inwestycja-standard {
+  background: #f8f8f8;
+  border-left: 4px solid #0056b3;
+  padding: 16px;
+  border-radius: 8px;
+  margin-top: 20px; 
+  font-size: 0.95rem;
+  color: #333;
+  line-height: 1.5;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.inwestycja-standard h5 {
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #222;
+}
+
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4 shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'home' %}">BZBUD</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link fw-bold" href="{% url 'home' %}">Strona główna</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'lista_ofert' %}">Oferta</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-5">
+    <h1 class="text-center">BZBUD</h1>
+    <p class="text-center text-muted">STRONA W BUDOWIE - OFERTY TESTOWE - Budujemy Twój komfort.</p>
+
+    <h1 class="text-center mb-4">Nasze inwestycje</h1>
+
+    {% for inwestycja in inwestycje %}
+      <div class="inwestycja-box">
+        <div class="inwestycja-info flex-grow-1 me-4">
+          <h4>{{ inwestycja.nazwa }}</h4>
+          <p class="mb-2 text-muted">{{ inwestycja.adres }}</p>
+          {% if inwestycja.opis %}
+            <p class="mb-3">{{ inwestycja.opis }}</p>
+          {% endif %}
+          <button class="btn btn-primary btn-sm" onclick="showPopup('popup-{{ inwestycja.id }}')">Szczegóły inwestycji</button>
+        </div>
+
+        <div class="inwestycja-img">
+          {% if inwestycja.zdjecie %}
+            <img src="{{ inwestycja.zdjecie.url }}" alt="{{ inwestycja.nazwa }}" onclick="openImageModal('{{ inwestycja.zdjecie.url }}')">
+          {% else %}
+            <img src="{% static 'no-image.jpg' %}" alt="Brak zdjęcia" onclick="openImageModal('{% static 'no-image.jpg' %}')">
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Popup z ofertami -->
+      <div id="popup-{{ inwestycja.id }}" class="popup">
+        <div class="popup-content shadow-lg rounded">
+          <span class="close" onclick="hidePopup('popup-{{ inwestycja.id }}')">&times;</span>
+          <h3 class="mb-4 text-center fw-bold">Oferty dla inwestycji {{ inwestycja.nazwa }}</h3>
+  
+
+          <!-- Galeria zdjęć inwestycji -->
+<div class="gallery-container position-relative mb-4">
+  <button class="gallery-arrow left" onclick="scrollGallery(this, -1)">&#10094;</button>
+  <div class="gallery-wrapper d-flex overflow-hidden">
+    {% if inwestycja.zdjecie %}
+      <img src="{{ inwestycja.zdjecie.url }}" alt="{{ inwestycja.nazwa }}"
+           class="gallery-thumb"
+           onclick="openImageModal('{{ inwestycja.zdjecie.url }}')">
+    {% endif %}
+
+    {% for zdj in inwestycja.zdjecia.all %}
+      <img src="{{ zdj.obraz.url }}" alt="Zdjęcie inwestycji"
+           class="gallery-thumb"
+           onclick="openImageModal('{{ zdj.obraz.url }}')">
+    {% endfor %}
+
+      
+  </div>
+  <button class="gallery-arrow right" onclick="scrollGallery(this, 1)">&#10095;</button>
+</div>
+
+
+          <ul class="list-unstyled">
+            {% for oferta in inwestycja.oferty.all %}
+              <li class="mb-3 pb-3 border-bottom">
+                <strong>{{ oferta.adres }}</strong><br>
+                 <span class="text-muted">{{ oferta.metraz }} m² • {{ oferta.pokoje }} pokoje</span><br>
+                 <span class="fw-semibold">Status:</span> {{ oferta.status }}<br>
+                 {% if oferta.ostatnia_cena %}
+                     <span class="fw-semibold">Cena:</span> {{ oferta.ostatnia_cena }} zł
+                      {% if oferta.cena_m2 %} (<span class="text-muted">{{ oferta.cena_m2|floatformat:0 }} zł/m²</span>) {% endif %}
+                 {% else %}
+                     <span class="text-muted">Brak ceny</span>
+                 {% endif %}
+
+                 {% if oferta.zdjecie %}
+                    <div class="mt-2">
+                   <button class="btn btn-outline-primary btn-sm" onclick="openRzutModal('{{ oferta.zdjecie.url }}')">Zobacz rzut</button>
+                    </div>
+                 {% endif %}
+                                <!-- Po liście ofert w popupie -->
+               
+
+            {% empty %}
+              <li class="text-center text-muted py-3">Brak ofert dla tej inwestycji</li>
+            {% endfor %}
+
+            {% if inwestycja.standard %}
+              <div class="inwestycja-standard">
+              <h5>Standard wykończenia budynku</h5>
+              <p>{{ inwestycja.standard|linebreaksbr }}</p>
+              </div>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    
+    {% empty %}
+      <p>Brak inwestycji</p>
+    {% endfor %}
+
+
+
+<!-- Modal na rzut oferty -->
+<div id="rzutModal" class="image-modal">
+  <span class="close-modal" onclick="closeRzutModal()">&times;</span>
+  <img id="rzutImage" src="" alt="Rzut oferty">
+</div>
+
+
+
+
+
+    <!-- Modal na powiększone zdjęcie -->
+<div id="imageModal" class="image-modal">
+  <span class="close-modal" onclick="closeImageModal()">&times;</span>
+  <img id="modalImage" src="" alt="Zdjęcie powiększone">
+</div>
+
+
+    <div class="text-center mt-4">
+      <a href="{% url 'lista_ofert' %}" class="btn btn-primary btn-lg btn-hover-fill">Zobacz inne oferty</a>
+    </div>
+
+    <!-- Sekcja "O nas" -->
+    <section class="container my-5 py-5 bg-light rounded shadow-sm">
+      <div class="row align-items-center">
+        <div class="col-md-6 mb-4 mb-md-0">
+          <h2 class="mb-3">O nas</h2>
+          <p class="lead">Rodzinna firma z Zielonki. Od lat budujemy komfortowe i nowoczesne mieszkania oraz domy, stawiając na jakość i zadowolenie naszych klientów.</p>
+        </div>
+        <div class="col-md-6 text-center">
+          <img src="{% static 'BZBUD.png' %}" alt="O nas" class="img-fluid rounded shadow-sm" style="max-height:300px; object-fit:cover">
+        </div>
+      </div>
+    </section>
+
+    <div style="position: fixed; bottom: 10px; right: 10px; background: rgba(255,255,255,0.9); padding:12px 18px; border:1px solid #ddd; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.2); font-size:14px; line-height:1.4;">
+      <strong>Kontakt:</strong><br>
+      tel: +48 696 362 748<br>
+      email: beatazochowska8@gmail.com
+    </div>
+
+  <script>
+    function showPopup(id){
+      document.getElementById(id).style.display = 'flex';
+    }
+    function hidePopup(id){
+      document.getElementById(id).style.display = 'none';
+    }
+    function openImageModal(src){
+      const modal = document.getElementById('imageModal');
+      const img = document.getElementById('modalImage');
+      img.src = src;
+      modal.style.display = 'flex';
+      setTimeout(() => modal.classList.add('show'), 10);
+    }
+    function closeImageModal(){
+      const modal = document.getElementById('imageModal');
+      modal.classList.remove('show');
+      setTimeout(() => modal.style.display = 'none', 300);
+    }
+    function openRzutModal(src){
+  const modal = document.getElementById('rzutModal');
+  const img = document.getElementById('rzutImage');
+  img.src = src;
+  modal.style.display = 'flex';
+  setTimeout(() => modal.classList.add('show'), 10);
+}
+function closeRzutModal(){
+  const modal = document.getElementById('rzutModal');
+  modal.classList.remove('show');
+  setTimeout(() => modal.style.display = 'none', 300);
+}
+function scrollGallery(button, direction) {
+  const container = button.parentElement.querySelector('.gallery-wrapper');
+  const scrollAmount = container.querySelector('.gallery-thumb').offsetWidth + 12; // szerokość + odstęp
+  container.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+}
+
+
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
