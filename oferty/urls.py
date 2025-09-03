@@ -8,7 +8,6 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework.renderers import JSONOpenAPIRenderer
 
 
-
 class SpectacularInlineAPIView(SpectacularAPIView):
     renderer_classes=[JSONOpenAPIRenderer]
 

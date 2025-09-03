@@ -3,10 +3,13 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Oferta, Cena
 from django.db.models import Prefetch
-# Strona główna
-#def home(request):
- #   ostatnia_oferta = Oferta.objects.order_by('-data_dodania').first()
-  #  return render(request, "home.html", {"ostatnia_oferta": ostatnia_oferta})
+from .serializers import OfertaSerializer
+from rest_framework.generics import ListAPIView
+
+
+class OfertyAPIView(ListAPIView):
+    queryset = Oferta.objects.all().prefetch_related("ceny")
+    serializer_class = OfertaSerializer
 
 class OfertyAPIView(APIView):
     """
