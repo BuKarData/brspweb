@@ -186,6 +186,42 @@
   color: #222;
 }
 
+.btn-hover-fill {
+
+  position: relative;
+  overflow: hidden;
+  color: #0056b3;
+  border: 2px solid #0056b3;
+  background-color: transparent;
+  transition: color 0.3s ease-in-out;
+}
+
+.btn-hover-fill::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 0;
+  height: 100%;
+  background-color: #0056b3;
+  z-index: 0;
+  transition: width 0.3s ease-in-out;
+}
+
+.btn-hover-fill:hover::before,
+.btn-hover-fill:active::before {
+  width: 100%
+}
+
+.btn-hover-fill span {
+position: relative;
+z-index: 1;
+}
+
+.btn-hover-fill:hover,
+.btn-hover-fill:active {
+  color: #fff !important;
+}
+
   </style>
 </head>
 
