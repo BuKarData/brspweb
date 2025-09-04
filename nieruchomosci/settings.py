@@ -43,10 +43,13 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Oferty Braspol',
-    'DESCRIPTION': 'Raporty ofert dla dane.gov.pl',
     'VERSION': 'v1',
-    'SERVE_INCLUDE_SCHEMA': False,  
+    'SERVE_INCLUDE_SCHEMA': False,  # opcjonalnie
+    'DEFAULT_GENERATOR_CLASS': 'drf_spectacular.generators.SchemaGenerator',
+    'COMPONENT_SPLIT_REQUEST': True,
+    'COMPONENT_SPLIT_PATCH': True,
 }
+
 
 
 
