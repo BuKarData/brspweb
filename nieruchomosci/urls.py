@@ -33,7 +33,7 @@ urlpatterns = [
     path("oferty/", include("oferty.urls")),
     path('health/', health, name='health'),
     path('api/schema/', SpectacularAPIView.as_view(
-        renderer_classes=[OpenApiJsonRenderer, OpenApiYamlRenderer]
+        renderer_classes=[JSONRenderer]
         ), name='schema'),
     path('api/docs/swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('api/docs/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
