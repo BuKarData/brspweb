@@ -36,19 +36,7 @@ INSTALLED_APPS = [
 
 ]
 
-REST_FRAMEWORK = {
-    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-}
 
-
-SPECTACULAR_SETTINGS = {
-    'TITLE': 'Oferty Braspol',
-    'VERSION': 'v1',
-    'SERVE_INCLUDE_SCHEMA': False,  # opcjonalnie
-    'DEFAULT_GENERATOR_CLASS': 'drf_spectacular.generators.SchemaGenerator',
-    'COMPONENT_SPLIT_REQUEST': True,
-    'COMPONENT_SPLIT_PATCH': True,
-}
 
 
 
@@ -149,3 +137,19 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 #  Domyślne auto-field
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',  # wymusza JSON zamiast YAML
+    ),
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Oferty Braspol API',
+    'DESCRIPTION': 'Raporty ofert dla dane.gov.pl',
+    'VERSION': 'v1',
+    'SERVE_INCLUDE_SCHEMA': False,  # nie wstawia schematu w Swagger UI
+    'SCHEMA_PATH_PREFIX': r'/api',   # ogranicza do endpointów API
+}
+
