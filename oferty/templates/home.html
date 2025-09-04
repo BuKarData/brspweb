@@ -33,16 +33,26 @@
 }
 
 
-    .inwestycja-img img {
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      cursor: pointer;
-      transition: transform 0.3s;
-      max-width: 600px;
-      max-height: 700px;
-      object-fit: cover;
-    }
-    .inwestycja-img img:hover { transform: scale(1.02); }
+.inwestycja-info {
+  flex: 1 1 55%;   /* opis inwestycji zajmuje ok. 55% szerokości */
+}
+
+.inwestycja-img {
+  flex: 1 1 40%;   /* zdjęcie obok, 40% szerokości */
+  text-align: right;
+}
+
+.inwestycja-img img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: transform 0.3s;
+}
+
+.inwestycja-img img:hover {
+  transform: scale(1.03);
+}
 
     .popup {
       display: none;
