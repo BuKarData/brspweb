@@ -1,8 +1,18 @@
-# oferty/views_api.py
-from rest_framework.views import APIView
-from rest_framework.response import Response
+from rest_framework import generics
+from .models import Oferta, Inwestycja, Cena
+from .serializers import OfertaSerializer, InwestycjaSerializer, CenaSerializer
 
-class RaportList(APIView):
-    def get(self, request):
-        # przykładowe dane
-        return Response([{"id": 1, "nazwa": "Oferta A"}])
+# Lista ofert
+class OfertaListAPIView(generics.ListAPIView):
+    queryset = Oferta.objects.all()
+    serializer_class = OfertaSerializer
+
+# Lista inwestycji
+class InwestycjaListAPIView(generics.ListAPIView):
+    queryset = Inwestycja.objects.all()
+    serializer_class = InwestycjaSerializer
+
+# Lista cen
+class CenaListAPIView(generics.ListAPIView):
+    queryset = Cena.objects.all()
+    serializer_class = CenaSerializer
