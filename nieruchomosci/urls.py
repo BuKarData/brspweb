@@ -19,17 +19,13 @@ from django.urls import path, include
 from django.conf import settings
 from oferty import views
 from django.conf.urls.static import static
-from oferty.views import lista_ofert, home  # Twoje istniejące widoki
-fom oferty.api import DataAPIView
+
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('oferty.urls')),  
-    path('oferty/', lista_ofert, name='lista_ofert'),
-    path('api/data.jsonld', DataAPIView.as_view(), name='data-jsonld'),
-    path('api/data.csv', DataAPIView.as_view(), name='data-csv'),
-    path('api/data.xlsx', DataAPIView.as_view(), name='data-xlsx'),
+
 ]
 
 
