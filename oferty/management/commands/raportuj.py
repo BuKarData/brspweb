@@ -2,10 +2,11 @@ from django.core.management.base import BaseCommand
 from oferty.models import Oferta
 import requests
 import json
-from datetime import date
+from datetime import datetime, date
 import csv
 import os
 from openpyxl import Workbook
+
 
 
 class Command(BaseCommand):
@@ -217,6 +218,8 @@ class Command(BaseCommand):
 
         self.stdout.write(self.style.SUCCESS(f"Raport JSON-LD został wygenerowany: {nazwa_pliku}"))
 
+    
+
     def handle(self, *args, **kwargs):
         self.stdout.write("Rozpoczynanie generowania raportów...")
 
@@ -305,11 +308,14 @@ class Command(BaseCommand):
 
         if raport_lines:
             payload = "\n".join(raport_lines)
-            headers = {"Content-Type": "application/x-json-stream; charset=utf-8"}
+            headers = {
+                "Content-Type": "application/x-json-stream; charset=utf-8",
+                "Last-Modified": datetime.now().strftime('%a, %d %b %Y %H:%M:%S GMT')
+            }
             url_api = "https://webhook.site/63ac4048-0ef4-4847-8787-0fff7d401940"
             try:
                 response = requests.post(url_api, headers=headers, data=payload.encode('utf-8'))
                 response.raise_for_status()
                 self.stdout.write(self.style.SUCCESS(f"Raport JSONL wysłany, status: {response.status_code}"))
             except requests.exceptions.RequestException as e:
-                self.stdout.write(self.style.ERROR(f"Błąd wysyłki JSONL: {e}"))
+                self.stdout.write(self.style.ERROR(f"Błąd wysyłki JSONL: {e}"))      

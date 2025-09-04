@@ -19,11 +19,13 @@ from django.urls import path, include
 from django.conf import settings
 from oferty import views
 from django.conf.urls.static import static
-
+from oferty.api import RaportAPIView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('oferty.urls')),  
+    path('api/raport.<str:format>', RaportAPIView.as_view(), name='raport-api'),
+    path('api/raport/', RaportAPIView.as_view(), name='raport-api-default'),
 ]
 
 
