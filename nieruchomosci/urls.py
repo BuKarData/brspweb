@@ -38,6 +38,7 @@ urlpatterns = [
     path('api/docs/swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('api/docs/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
     path('api/', include('oferty.urls_api')),
+    path("api/raport/", views.raport_jsonapi, name="raport_jsonapi"),
 ]
 
 

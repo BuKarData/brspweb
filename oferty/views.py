@@ -4,6 +4,13 @@ from django.http import JsonResponse
 from django.db.models import Prefetch
 from .forms import OfertaForm, CenaForm
 from .models import Oferta, Cena, Inwestycja
+from .raportuj import generuj_i_zapisz_raport_jsonapi
+
+
+
+def raport_jsonapi(request):
+    url_pliku = generuj_i_zapisz_raport_jsonapi()
+    return JsonResponse({"url": url_pliku})
 
 
 # Strona główna

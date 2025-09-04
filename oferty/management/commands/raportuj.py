@@ -3,6 +3,8 @@ from oferty.models import Oferta
 import requests
 import json
 from datetime import date
+from django.conf import settings
+
 import csv
 import os
 from openpyxl import Workbook
@@ -300,3 +302,60 @@ class Command(BaseCommand):
             self.stdout.write(self.style.ERROR(f"Błąd wysyłki raportu JSONL: {e}"))
         except Exception as e:
             self.stdout.write(self.style.ERROR(f"Wystąpił nieoczekiwany błąd: {e}"))
+
+def generuj_i_zapisz_raport_jsonapi():
+    data = []
+
+    for oferta in Oferta.objects.all():
+        cena_obj = oferta.ceny.order_by("-data").first()
+        cena_m2 = round(float(cena_obj.kwota)/float(oferta.metraz),2) if cena_obj and oferta.metraz else None
+
+        nieruchomosc = {
+            "type": "nieruchomosc",
+            "id": oferta.numer_lokalu or oferta.numer_oferty or str(oferta.id),
+            "attributes": {
+                "rodzaj": oferta.rodzaj_lokalu.nazwa if oferta.rodzaj_lokalu else "lokal mieszkalny",
+                "status": oferta.status,
+                "cena": float(cena_obj.kwota) if cena_obj else None,
+                "data_obowiazywania_ceny": cena_obj.data.isoformat() if cena_obj else None,
+                "cena_m2": cena_m2,
+                "data_obowiazywania_ceny_m2": cena_obj.data.isoformat() if cena_obj else None,
+            }
+        }
+        data.append(nieruchomosc)
+
+    raport = {
+        "data": data,
+        "meta": {
+            "deweloper": {
+                "nazwa": "BM INVEST SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+                "forma_prawna": "Spółka z o.o.",
+                "nip": "8141700790",
+                "regon": "529349380",
+                "krs": "0001120738"
+            },
+            "adres_przedsiewziecia": {
+                "wojewodztwo": "podkarpackie",
+                "powiat": "Powiat miasta Rzeszów",
+                "gmina": "Rzeszów",
+                "miejscowosc": "Rzeszów",
+                "ulica": "Dworzysko",
+                "kod_pocztowy": "35-213"
+            },
+            "liczba_rekordow_lacznie": Oferta.objects.count(),
+            "data_ostatniej_aktualizacji": datetime.now().isoformat()
+        }
+    }
+
+    # Generowanie unikalnej nazwy pliku
+    filename = f"cf739979-f6e4-41ab-8567-733c76264c8f_{datetime.now().strftime('%Y%m%d')}.json"
+    filepath = settings.MEDIA_ROOT / "upload/prices" / filename
+
+    # Tworzymy folder jeśli nie istnieje
+    filepath.parent.mkdir(parents=True, exist_ok=True)
+
+    with open(filepath, "w", encoding="utf-8") as f:
+        json.dump(raport, f, ensure_ascii=False, indent=2)
+
+    # Zwracamy URL publiczny do pliku
+    return f"{settings.MEDIA_URL}upload/prices/{filename}"
