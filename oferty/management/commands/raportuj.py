@@ -231,7 +231,7 @@ class Command(BaseCommand):
             "ulica": "Kilińskiego 92A",
             "kod_pocztowy": "05-220",
             "kraj": "Polska",
-            "telefon": "+48 502 930 015",
+            "telefon": "502930015",
             "email": "braspol@onet.pl",
             "strona_www": "https://www.braspol.pl"
         }
