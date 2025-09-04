@@ -10,6 +10,16 @@ import os
 from openpyxl import Workbook
 
 
+from oferty.utils.raportuj_utils import generuj_i_zapisz_raport_jsonapi
+
+class Command(BaseCommand):
+    help = 'Generuje raport JSON:API'
+
+    def handle(self, *args, **kwargs):
+        generuj_i_zapisz_raport_jsonapi()
+        self.stdout.write(self.style.SUCCESS('Raport wygenerowany!'))
+
+
 class Command(BaseCommand):
     help = "Generuje dzienny raport ofert w formatach JSONL/JSON-LD, CSV i XLSX, a następnie wysyła go do API."
 

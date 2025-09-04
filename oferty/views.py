@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.db.models import Prefetch
 from .forms import OfertaForm, CenaForm
 from .models import Oferta, Cena, Inwestycja
-from .raportuj import generuj_i_zapisz_raport_jsonapi
+from oferty.utils.raportuj_utils import generuj_i_zapisz_raport_jsonapi
 
 
 
