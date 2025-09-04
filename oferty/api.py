@@ -1,12 +1,17 @@
-# oferty/api.py - PROSTA WERSJA TESTOWA
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from datetime import datetime
 
-def simple_api_test(request):
-    """Prosta funkcja testowa bez złożonych importów"""
-    data = {
-        "test": "działa",
-        "timestamp": datetime.now().isoformat(),
-        "message": "API test successful"
-    }
-    return JsonResponse(data)
+def data_api_view(request):
+    if request.path.endswith('.jsonld'):
+        data = {
+            "@context": "https://schema.org",
+            "@type": "Dataset",
+            "name": "Testowe dane",
+            "dateModified": datetime.now().strftime('%Y-%m-%d'),
+            "test": "działa"
+        }
+        response = JsonResponse(data)
+        response['Content-Type'] = 'application/ld+json'
+        return response
+    
+    return HttpResponse('Endpoint testowy', status=200)
