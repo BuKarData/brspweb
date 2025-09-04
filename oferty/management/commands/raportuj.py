@@ -104,7 +104,7 @@ def generate_csv_data():
     fieldnames += [f"swiadczenie_{i+1}" for i in range(max_swi)]
 
     csv_output = io.StringIO()
-    writer = csv.DictWriter(csv_output, fieldnames=fieldnames, delimiter=';')
+    writer = csv.writer(csv_output, delimiter=';')
     writer.writeheader()
 
     for rekord_csv in _build_flattened_records(dane_dewelopera, oferty, max_pom, max_rab, max_swi):
@@ -156,7 +156,7 @@ def generate_xlsx_data():
     return xlsx_content
 
 def generate_jsonld_data():
-    """Generuje dane JSON-LD w pamięci (dla API)"""
+    """Generuje dane JSON-LD w pamięci (dla API) z poprawnymi polskimi znakami"""
     dane_dewelopera = get_deweloper_data()
     oferty = get_oferty_data()
     current_date = datetime.now().strftime('%Y-%m-%d')

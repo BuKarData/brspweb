@@ -1,4 +1,5 @@
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
+import json 
 from datetime import datetime
 from oferty.management.commands.raportuj import (
     generate_jsonld_data, 
@@ -11,26 +12,19 @@ from oferty.management.commands.raportuj import (
 def data_api_view(request):
     try:
         if request.path.endswith('.jsonld'):
-            try:
-                data = generate_jsonld_data()
-                print("JSON-LD data generated successfully")  # DEBUG
-                response = JsonResponse(data, json_dumps_params={'ensure_ascii': False})
-                response['Content-Type'] = 'application/ld+json'
-            except Exception as e:
-                print(f"JSON-LD Error: {str(e)}")  # DEBUG
-                return HttpResponse(f'JSON-LD Generation Error: {str(e)}', status=500, content_type='text/plain')
+            data = generate_jsonld_data()
+            # ZMIANA: Użyj HttpResponse zamiast JsonResponse i ręcznie zakoduj JSON
+            json_data = json.dumps(data, ensure_ascii=False, indent=2)
+            response = HttpResponse(json_data, content_type='application/ld+json; charset=utf-8')
             
         elif request.path.endswith('.csv'):
             data = generate_csv_data()
-            if not data or data == "":
-                return HttpResponse('No CSV data available', status=404, content_type='text/plain')
-            response = HttpResponse(data, content_type='text/csv')
+            # ZMIANA: Dodaj encoding UTF-8 dla CSV
+            response = HttpResponse(data, content_type='text/csv; charset=utf-8')
             response['Content-Disposition'] = 'inline; filename="raport.csv"'
             
         elif request.path.endswith('.xlsx'):
             data = generate_xlsx_data()
-            if not data:
-                return HttpResponse('No XLSX data available', status=404, content_type='text/plain')
             response = HttpResponse(
                 data,
                 content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
