@@ -236,7 +236,7 @@ def generate_jsonld_data():
                 "addressLocality": dane_dewelopera["miejscowosc"],
                 "addressRegion": dane_dewelopera["wojewodztwo"],
                 "postalCode": dane_dewelopera["kod_pocztowy"],
-                "addressCountry": dane_dewelprocessor["kraj"],
+                "addressCountry": dane_dewelopera["kraj"],
             },
             "telephone": dane_dewelopera.get("telefon", ""),
             "email": dane_dewelopera.get("email", ""),
