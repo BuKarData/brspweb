@@ -22,6 +22,7 @@ from django.conf.urls.static import static
 from rest_framework import permissions
 from django.http import HttpResponse
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
+from drf_spectacular.renderers import OpenApiJsonRenderer, OpenApiYamlRenderer
 
 def health(request):
     return HttpResponse("OK")
@@ -31,7 +32,9 @@ urlpatterns = [
     path('', include('oferty.urls')),  
     path("oferty/", include("oferty.urls")),
     path('health/', health, name='health'),
-    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/schema/', SpectacularAPIView.as_view(
+        renderer_classes=[OpenApiJsonRenderer, OpenApiYamlRenderer]
+        ), name='schema'),
     path('api/docs/swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('api/docs/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
     path('api/', include('oferty.urls_api')),
