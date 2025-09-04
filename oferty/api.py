@@ -13,15 +13,18 @@ def data_api_view(request):
     try:
         if request.path.endswith('.jsonld'):
             data = generate_jsonld_data()
-            # ZMIANA: Użyj HttpResponse zamiast JsonResponse i ręcznie zakoduj JSON
             json_data = json.dumps(data, ensure_ascii=False, indent=2)
             response = HttpResponse(json_data, content_type='application/ld+json; charset=utf-8')
             
         elif request.path.endswith('.csv'):
             data = generate_csv_data()
-            # ZMIANA: Dodaj encoding UTF-8 dla CSV
-            response = HttpResponse(data, content_type='text/csv; charset=utf-8')
+            # ZMIANA: Użyj BytesIO lub odpowiedniego encodingu
+            response = HttpResponse(
+                data,
+                content_type='text/csv; charset=utf-8'
+            )
             response['Content-Disposition'] = 'inline; filename="raport.csv"'
+            response['Content-Encoding'] = 'utf-8'
             
         elif request.path.endswith('.xlsx'):
             data = generate_xlsx_data()
