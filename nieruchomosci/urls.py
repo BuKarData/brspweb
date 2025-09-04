@@ -19,28 +19,13 @@ from django.urls import path, include
 from django.conf import settings
 from oferty import views
 from django.conf.urls.static import static
-from rest_framework import permissions
-from django.http import HttpResponse
-from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
-from drf_spectacular.renderers import OpenApiJsonRenderer, OpenApiYamlRenderer
 
-def health(request):
-    return HttpResponse("OK")
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('oferty.urls')),  
-    path("oferty/", include("oferty.urls")),
-    path('health/', health, name='health'),
-    path('api/schema/', SpectacularAPIView.as_view(
-        renderer_classes=[JSONRenderer]
-        ), name='schema'),
-    path('api/docs/swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
-    path('api/docs/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
-    path('api/', include('oferty.urls_api')),
-    path("api/raport/", views.raport_jsonapi, name="raport_jsonapi"),
 ]
-
 
 
 

@@ -32,14 +32,23 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "oferty",
     "rest_framework",
-    "drf_spectacular"
-
+    'drf_spectacular',
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
 
 
-
-
+SPECTACULAR_SETTINGS = {
+    'TITLE' : 'Brospol Raport',
+    'DESCRIPTION':'API do raportowania nieruchomosci',
+    'VERSION':'1.0.0',
+    'SERVE_INCLUDE_SCHEMA':False,
+    'SERVERS' : [
+         {'url': 'https://brspweb-production.up.railway.app', 'description': 'Publiczny URL API'}
+    ]
+}
 
 # Middleware
 MIDDLEWARE = [
@@ -90,13 +99,6 @@ if not _DB_URL:
     # WOLNO użyć SQLite TYLKO lokalnie. Na produkcji to skasuj!
     _DB_URL = "sqlite:///db.sqlite3"
 
-SWAGGER_SETTINGS = {
-    'DEFAULT_INFO': 'nieruchomosci.urls.schema_view',  # ścieżka do Twojego schema_view
-    'USE_SESSION_AUTH': False,
-    'VALIDATOR_URL': None,
-}
-
-YASG_OPENAPI = '3.0.2'  # wymuszenie OpenAPI 3
 
 
 DATABASES = {
@@ -137,19 +139,3 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 #  Domyślne auto-field
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-REST_FRAMEWORK = {
-    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-    'DEFAULT_RENDERER_CLASSES': (
-        'rest_framework.renderers.JSONRenderer',  # wymusza JSON zamiast YAML
-    ),
-}
-
-SPECTACULAR_SETTINGS = {
-    'TITLE': 'Oferty Braspol API',
-    'DESCRIPTION': 'Raporty ofert dla dane.gov.pl',
-    'VERSION': 'v1',
-    'SERVE_INCLUDE_SCHEMA': False,  # nie wstawia schematu w Swagger UI
-    'SCHEMA_PATH_PREFIX': r'/api',   # ogranicza do endpointów API
-}
-

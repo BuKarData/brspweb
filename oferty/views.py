@@ -4,19 +4,8 @@ from django.http import JsonResponse
 from django.db.models import Prefetch
 from .forms import OfertaForm, CenaForm
 from .models import Oferta, Cena, Inwestycja
-from oferty.utils.raportuj_utils import generuj_i_zapisz_raport_jsonapi
 
 
-
-def raport_jsonapi(request):
-    url_pliku = generuj_i_zapisz_raport_jsonapi()
-    return JsonResponse({"url": url_pliku})
-
-
-# Strona główna
-#def home(request):
- #   ostatnia_oferta = Oferta.objects.order_by('-data_dodania').first()
-  #  return render(request, "home.html", {"ostatnia_oferta": ostatnia_oferta})
 
 def home(request):
     ceny_prefetch = Prefetch('ceny', queryset=Cena.objects.order_by('data'))
@@ -135,56 +124,3 @@ def safe_float(value):
         return float(str(value).replace(" ", "").replace(",", ""))
     except (ValueError, TypeError):
         return None
-
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny
-from rest_framework.response import Response
-from oferty.models import Oferta
-import json
-
-@api_view(['GET'])
-@permission_classes([AllowAny])
-def raport_jsonl(request):
-    dane_dewelopera = {
-        "nip": "8261116680",
-        "regon": "540649478",
-        "nazwa_firmy": "B.Z-BUD Beata Żochowska",
-        "adres_biura": "woj. MAZOWIECKIE, pow. wołomiński, gm. Zielonka, miejsc. Zielonka, ul. Ignacego Paderewskiego, nr 61, 05-220"
-    }
-
-    oferty = Oferta.objects.prefetch_related(
-        "ceny", "inwestycja", "pomieszczenia_przynalezne", "rabaty", "inne_swiadczenia"
-    ).all()
-
-    raport_lines = []
-    for oferta in oferty:
-        if not oferta.inwestycja or not oferta.inwestycja.unikalny_identyfikator_przedsiewziecia:
-            continue
-        ceny_list = list(oferta.ceny.all())
-        if not ceny_list:
-            continue
-        ostatnia_cena = ceny_list[-1]
-        cena_m2 = round(float(ostatnia_cena.kwota)/float(oferta.metraz),2) if oferta.metraz else None
-
-        rekord_oferty = {
-            "deweloper": dane_dewelopera,
-            "inwestycja": {
-                "unikalny_identyfikator": oferta.inwestycja.unikalny_identyfikator_przedsiewziecia,
-            },
-            "oferta": {
-                "id": oferta.id,
-                "numer_lokalu": oferta.numer_lokalu,
-                "numer_oferty": oferta.numer_oferty if hasattr(oferta, 'numer_oferty') else None,
-                "rodzaj_lokalu": oferta.rodzaj_lokalu.nazwa if oferta.rodzaj_lokalu else None,
-                "metraz": float(oferta.metraz) if oferta.metraz else None,
-                "pokoje": oferta.pokoje,
-                "status": oferta.status,
-                "cena": float(ostatnia_cena.kwota),
-                "cena_za_m2": cena_m2,
-                "data_ceny": ostatnia_cena.data.isoformat() if ostatnia_cena else None
-            }
-        }
-        raport_lines.append(rekord_oferty)
-
-    return Response(raport_lines)
-
