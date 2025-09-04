@@ -8,9 +8,7 @@ from .api import data_api_view
 urlpatterns = [
     path('', views.home, name='home'),
     path('oferty/', views.lista_ofert, name='lista_ofert'),
-    path('api/data.jsonld', data_api_view, name='data-jsonld'),
-    path('api/data.csv', data_api_view, name='data-csv'),
-    path('api/data.xlsx', data_api_view, name='data-xlsx'),
+
 ]
 
 

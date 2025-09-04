@@ -7,10 +7,15 @@ from .models import Oferta, Cena, Inwestycja
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-# Strona główna
-#def home(request):
- #   ostatnia_oferta = Oferta.objects.order_by('-data_dodania').first()
-  #  return render(request, "home.html", {"ostatnia_oferta": ostatnia_oferta})
+# oferty/views.py
+from django.shortcuts import render
+from django.http import HttpResponse
+
+def home(request):
+    return HttpResponse("Strona główna działa!")
+
+def lista_ofert(request):
+    return HttpResponse("Lista ofert działa!")
 
 class OfertyAPIView(APIView):
     """
