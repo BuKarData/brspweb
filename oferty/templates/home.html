@@ -219,6 +219,15 @@
   border-color: #d4af37;
 }
 
+.about-section {
+  border: 2px solid #504f4b;   /* elegancki złoty */
+  border-radius: 16px;         /* ładne zaokrąglenie rogów */
+  background-color: #efefef;   /* białe tło w środku */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* lekki cień */
+  padding: 40px;               /* trochę większy odstęp */
+}
+
+
 
   </style>
 </head>
@@ -384,17 +393,20 @@
     </div>
 
     <!-- Sekcja "O nas" -->
-    <section class="container my-5 py-5 bg-light rounded shadow-sm">
+    <section class="container my-5 about-section">
       <div class="row align-items-center">
         <div class="col-md-6 mb-4 mb-md-0">
           <h2 class="mb-3">O nas</h2>
           <p class="lead">Firma deweloperska z Zielonki. Profesjonalna obsługa, jakość, niezaprzeczalny komfort. </p>
         </div>
         <div class="col-md-6 text-center">
-          <img src="{% static '07front.jpg' %}" alt="O nas" class="img-fluid rounded shadow-sm" style="max-height:300px; object-fit:cover">
+          <img src="{% static '07front.jpg' %}" alt="O nas"
+               class="img-fluid rounded shadow-sm"
+               style="max-height:300px; object-fit:cover">
         </div>
       </div>
     </section>
+    
 
     <div style="position: fixed; bottom: 10px; right: 10px; background: rgba(255,255,255,0.9); padding:12px 18px; border:1px solid #ddd; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.2); font-size:14px; line-height:1.4;">
       <strong>Kontakt:</strong><br>
