@@ -6,12 +6,19 @@ from oferty.management.commands.raportuj import (
     generate_xlsx_data
 )
 
+
+
 def data_api_view(request):
     try:
         if request.path.endswith('.jsonld'):
-            data = generate_jsonld_data()
-            response = JsonResponse(data, json_dumps_params={'ensure_ascii': False})
-            response['Content-Type'] = 'application/ld+json'
+            try:
+                data = generate_jsonld_data()
+                print("JSON-LD data generated successfully")  # DEBUG
+                response = JsonResponse(data, json_dumps_params={'ensure_ascii': False})
+                response['Content-Type'] = 'application/ld+json'
+            except Exception as e:
+                print(f"JSON-LD Error: {str(e)}")  # DEBUG
+                return HttpResponse(f'JSON-LD Generation Error: {str(e)}', status=500, content_type='text/plain')
             
         elif request.path.endswith('.csv'):
             data = generate_csv_data()
