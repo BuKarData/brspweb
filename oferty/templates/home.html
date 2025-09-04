@@ -20,10 +20,14 @@
     .status-sprzedane { color: red; font-weight:bold; }
 
     .inwestycja-box {
-      border: 2px solid #8e8e8e;    /* złoty elegancki border */
-      border-radius: 16px;          /* zaokrąglone rogi */
-      background: #ffffff;          /* białe tło w środku */
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* delikatny cień */
+      display: flex;
+      flex-wrap: wrap;               /* pozwala ładnie złamać w mobile */
+      justify-content: space-between;
+      align-items: center;
+      border: 2px solid #989898;
+      border-radius: 16px;
+      background: #ffffff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
       padding: 20px;
       margin-bottom: 30px;
 }
