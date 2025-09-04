@@ -328,19 +328,18 @@ def generuj_i_zapisz_raport_jsonapi():
         "data": data,
         "meta": {
             "deweloper": {
-                "nazwa": "BM INVEST SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+                "nazwa": "Braspol",
                 "forma_prawna": "Spółka z o.o.",
-                "nip": "8141700790",
-                "regon": "529349380",
-                "krs": "0001120738"
+                "nip": "1250994717",
+                "regon": "141371661",
             },
             "adres_przedsiewziecia": {
-                "wojewodztwo": "podkarpackie",
-                "powiat": "Powiat miasta Rzeszów",
-                "gmina": "Rzeszów",
-                "miejscowosc": "Rzeszów",
-                "ulica": "Dworzysko",
-                "kod_pocztowy": "35-213"
+                "wojewodztwo": "mazowieckie",
+                "powiat": "Powiat Wołomiński",
+                "gmina": "Zielonka",
+                "miejscowosc": "Zielonka",
+                "ulica": "Kilińskiego 92A",
+                "kod_pocztowy": "05-220"
             },
             "liczba_rekordow_lacznie": Oferta.objects.count(),
             "data_ostatniej_aktualizacji": datetime.now().isoformat()
