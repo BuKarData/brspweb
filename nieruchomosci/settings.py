@@ -36,18 +36,7 @@ INSTALLED_APPS = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-}
-
-
-SPECTACULAR_SETTINGS = {
-    'TITLE' : 'Brospol Raport',
-    'DESCRIPTION':'API do raportowania nieruchomosci',
-    'VERSION':'1.0.0',
-    'SERVE_INCLUDE_SCHEMA':False,
-    'SERVERS' : [
-         {'url': 'https://brspweb-production.up.railway.app', 'description': 'Publiczny URL API'}
-    ]
+    'DEFAULT_SCHEMA_CLASS' : 'drf_spectacular.openapi.AutoSchema'
 }
 
 # Middleware
