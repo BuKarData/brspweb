@@ -80,7 +80,7 @@ def _build_flattened_records(dane_dewelopera, oferty, max_pom, max_rab, max_swi)
         yield rekord_csv
 
 def generate_csv_data():
-    """Generuje dane CSV w pamięci (dla API)"""
+    """Generuje dane CSV w pamięci (dla API) z polskimi znakami"""
     dane_dewelopera = get_deweloper_data()
     oferty = get_oferty_data()
     
@@ -103,17 +103,26 @@ def generate_csv_data():
     fieldnames += [f"rabat_{i+1}" for i in range(max_rab)]
     fieldnames += [f"swiadczenie_{i+1}" for i in range(max_swi)]
 
-    csv_output = io.StringIO()
-    writer = csv.writer(csv_output, delimiter=';')
-    writer.writeheader()
+    # UŻYJ BytesIO zamiast StringIO dla lepszego handlingu encodingu
+    csv_output = io.BytesIO()
+    
+    # UŻYJ UTF-8 z BOM dla Excel (żeby polskie znaki działały)
+    csv_output.write(b'\xEF\xBB\xBF')  # UTF-8 BOM
+    
+    # Zapisz dane z encodingiem UTF-8
+    writer = csv.writer(io.TextIOWrapper(csv_output, encoding='utf-8-sig'), delimiter=';')
+    writer.writerow(fieldnames)
 
-    for rekord_csv in _build_flattened_records(dane_dewelopera, oferty, max_pom, max_rab, max_swi):
-        writer.writerow(rekord_csv)
+    for rekord in _build_flattened_records(dane_dewelopera, oferty, max_pom, max_rab, max_swi):
+        row = [rekord.get(field, "") for field in fieldnames]
+        writer.writerow(row)
 
+    # Pobierz zawartość jako bytes
     csv_content = csv_output.getvalue()
     csv_output.close()
     
-    return csv_content
+    # ZWRÓĆ JAKO STRING Z UTF-8
+    return csv_content.decode('utf-8-sig')
 
 def generate_xlsx_data():
     """Generuje dane XLSX w pamięci (dla API)"""
