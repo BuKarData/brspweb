@@ -20,11 +20,11 @@
     .status-sprzedane { color: red; font-weight:bold; }
 
     .inwestycja-box {
-      background: #656565;
+      background: #f9f9f9;
       margin-bottom: 20px;
       padding: 15px;
       border-radius: 8px;
-      border: 1px solid #606060;
+      border: 1px solid #ddd;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -52,7 +52,7 @@
       z-index: 2000;
     }
     .popup-content {
-      background: #a19a9a;
+      background: #fff;
       padding: 30px;
       width: 80%;
       max-width: 700px;
@@ -143,7 +143,7 @@
   height: 100px;
   object-fit: cover;
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(50, 50, 50, 0.15);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
   cursor: pointer;
   transition: transform 0.3s ease;
 }
@@ -171,13 +171,13 @@
 .gallery-arrow.right { right: -20px; }
 
 .inwestycja-standard {
-  background: #e8d6d6;
-  border-left: 4px solid #839040;
+  background: #f8f8f8;
+  border-left: 4px solid #0056b3;
   padding: 16px;
   border-radius: 8px;
   margin-top: 20px; 
   font-size: 0.95rem;
-  color: #dcdcdc;
+  color: #333;
   line-height: 1.5;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
@@ -186,15 +186,13 @@
   font-weight: 600;
   color: #222;
 }
-
 .btn-hover-fill {
-
   position: relative;
   overflow: hidden;
-  color: #a5a513;
-  border: 2px solid #a5a513;
+  color: #d4af37; 
+  border: 2px solid #d4af37;
   background-color: transparent;
-  transition: color 0.3s ease-in-out;
+  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
   z-index: 1;
 }
 
@@ -204,116 +202,21 @@
   top: 0; left: 0;
   width: 0;
   height: 100%;
-  background-color: #a5a513;
+  background-color: #d4af37;
   z-index: -1;
   transition: width 0.3s ease-in-out;
 }
 
 .btn-hover-fill:hover::before,
 .btn-hover-fill:active::before {
-  width: 100%
+  width: 100%;
 }
 
-.btn-hover-fill:hover span,
-.btn-hover-fill:active span{
-  color: #fff
-}
-/* Ogólny styl strony */
-body, html {
-    margin: 0; 
-    padding: 0; 
-    height: 100%;
-    background-color: #f5f5f5; /* delikatny jasnoszary */
-    color: #333; /* ciemny szary tekst */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-/* Navbar */
-.navbar {
-    background-color: #2c2c2c; /* elegancka ciemna szarość */
-}
-.navbar .navbar-brand,
-.navbar .nav-link {
-    color: #000000 !important; /* złoty */
-}
-.navbar .nav-link:hover {
-    color: #000000 !important; /* jaśniejszy złoty */
-}
-
-/* Hero / nagłówki */
-h1, h2, h3, h4, h5, h6 {
-    color: #2c2c2c; /* ciemny szary dla nagłówków */
-}
-.text-muted {
-    color: #7a7a7a !important; /* stonowany szary */
-}
-
-/* Inwestycja box */
-.inwestycja-box {
-    background: #ffffff; /* biały, ale neutralny */
-    border: 1px solid #ccc; /* subtelny szary */
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-.inwestycja-box h4 {
-    color: #2c2c2c; /* ciemny szary */
-}
-.inwestycja-box p {
-    color: #555; /* średni szary tekst */
-}
-
-/* Przycisk */
-.btn-hover-fill {
-    color: #d4af37; /* złoty */
-    border: 2px solid #d4af37;
-}
-.btn-hover-fill::before {
-    background-color: #d4af37; /* złoty efekt hover */
-}
-.btn-hover-fill:hover span,
-.btn-hover-fill:active span {
-    color: #fff;
-}
-
-/* Statusy */
-.status-dostępne { color: #28a745; font-weight:bold; } /* zielony można zostawić dla kontrastu */
-.status-rezerwacja { color: #f0ad4e; font-weight:bold; } /* pomarańczowy stonowany */
-.status-sprzedane { color: #dc3545; font-weight:bold; } /* czerwony, żeby było czytelne */
-
-/* Popup i modale */
-.popup-content, .image-modal .popup-content {
-    background: #a29e9e;
-    color: #333;
-}
-.popup-content h3 {
-    color: #2c2c2c; /* nagłówek popup */
-}
-.close {
-    color: #888;
-}
-.close:hover {
-    color: #2c2c2c;
-}
-
-/* Galeria */
-.gallery-thumb {
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-/* Standard inwestycji */
-.inwestycja-standard {
-    background: #f9f9f9;
-    border-left: 4px solid #d4af37; /* złoty akcent */
-    color: #555;
-}
-.inwestycja-standard h5 {
-    color: #2c2c2c;
-}
-
-/* Sekcja "O nas" */
-.bg-light {
-    background-color: #f5f5f5 !important;
+.btn-hover-fill:hover,
+.btn-hover-fill:active {
+  color: #fff; 
+  background-color: transparent !important; 
+  border-color: #d4af37;
 }
 
 
