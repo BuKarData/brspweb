@@ -24,13 +24,8 @@ class Oferta(models.Model):
         ("rezerwacja", "Rezerwacja"),
     ]
 
-    inwestycja = models.ForeignKey(
-        "Inwestycja",
-        related_name="oferty",
-        on_delete=models.CASCADE,
-        null=True, 
-        blank=True,
-    )
+    inwestycja = models.ForeignKey(Inwestycja, related_name="oferty", on_delete=models.CASCADE)
+    
     adres = models.CharField(max_length=255)
     metraz = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)
     pokoje = models.IntegerField()
@@ -46,7 +41,7 @@ class Oferta(models.Model):
 
 class Rzut(models.Model):
     oferta = models.ForeignKey(Oferta, related_name="rzuty", on_delete=models.CASCADE)
-    obraz = models.ImageField(upload_to="rzuty/")
+    zdjecie = models.ImageField(upload_to="rzuty/")
 
 class Cena(models.Model):
     oferta = models.ForeignKey(Oferta, related_name="ceny", on_delete=models.CASCADE)

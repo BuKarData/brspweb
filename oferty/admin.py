@@ -8,7 +8,7 @@ from .models import (
     PomieszczeniePrzynalezne,
     SwiadczeniePieniezne,
     Rabat,
-    Rzut
+    Rzut,
 )
 
 @admin.register(RodzajLokalu)
@@ -37,9 +37,9 @@ class InwestycjaZdjecieInline(admin.TabularInline):
     def inwestycja_nazwa(self, obj):
         return obj.inwestycja.nazwa if obj.inwestycja else "Brak inwestycji"
 
-class RzutInline(admin.TabularInline):  # albo StackedInline dla kart zamiast tabeli
+class RzutInline(admin.TabularInline): 
     model = Rzut
-    extra = 1  # ile pustych formularzy ma się pojawiać na start
+    extra = 1  
 
 @admin.register(Inwestycja)
 class InwestycjaAdmin(admin.ModelAdmin):
