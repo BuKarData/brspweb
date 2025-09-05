@@ -240,6 +240,11 @@
   padding: 40px;               /* trochę większy odstęp */
 }
 
+.btn-hover-fill.btn-sm {
+  padding: 4px 10px;
+  font-size: 0.875rem;
+}
+
 
 
   </style>
@@ -356,11 +361,35 @@
                      <span class="text-muted">Brak ceny</span>
                  {% endif %}
 
-                 {% if oferta.zdjecie %}
+                 {% if oferta.rzuty.all %}
                     <div class="mt-2">
-                   <button class="btn btn-outline-primary btn-sm" onclick="openRzutModal('{{ oferta.zdjecie.url }}')">Zobacz rzut</button>
+                    <button class="btn btn-sm btn-hover-fill" onclick="openRzutyGallery('{{ oferta.id }}')">
+                    Zobacz rzuty
+                    </button>
                     </div>
                  {% endif %}
+
+                 <div id="rzuty-data-{{ oferta.id }}" style="display:none;">
+                  {% for rzut in oferta.rzuty.all %}
+                    <img src="{{ rzut.obraz.url }}" alt="Rzut {{ forloop.counter }}">
+                  {% endfor %}
+                </div>
+                
+                <div id="rzutyModal" class="image-modal">
+                  <span class="close-modal" onclick="closeRzutyGallery()">&times;</span>
+                  <div id="rzutyGallery" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner"></div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#rzutyGallery" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#rzutyGallery" data-bs-slide="next">
+                      <span class="carousel-control-next-icon"></span>
+                    </button>
+                  </div>
+                </div>
+                
+
+               
                                 <!-- Po liście ofert w popupie -->
                
 
@@ -464,6 +493,41 @@ function scrollGallery(button, direction) {
   const scrollAmount = container.querySelector('.gallery-thumb').offsetWidth + 12; // szerokość + odstęp
   container.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
 }
+
+function openRzutyGallery(ofertaId) {
+  const modal = document.getElementById('rzutyModal');
+  const inner = modal.querySelector('.carousel-inner');
+  const rzutyContainer = document.getElementById(`rzuty-data-${ofertaId}`);
+
+  // wyczyść stare zdjęcia
+  inner.innerHTML = '';
+
+  // wstaw nowe zdjęcia jako elementy karuzeli
+  if (rzutyContainer) {
+    const imgs = rzutyContainer.querySelectorAll('img');
+    imgs.forEach((img, index) => {
+      const item = document.createElement('div');
+      item.classList.add('carousel-item');
+      if (index === 0) item.classList.add('active'); // pierwszy aktywny
+      const clone = img.cloneNode();
+      clone.classList.add('d-block', 'w-100');
+      clone.style.maxHeight = '80vh';
+      clone.style.objectFit = 'contain';
+      item.appendChild(clone);
+      inner.appendChild(item);
+    });
+  }
+
+  modal.style.display = 'flex';
+  setTimeout(() => modal.classList.add('show'), 10);
+}
+
+function closeRzutyGallery() {
+  const modal = document.getElementById('rzutyModal');
+  modal.classList.remove('show');
+  setTimeout(() => modal.style.display = 'none', 300);
+}
+
 
 
   </script>
