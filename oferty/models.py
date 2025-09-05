@@ -36,8 +36,7 @@ class Oferta(models.Model):
     pokoje = models.IntegerField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="dostępne")
     data_dodania = models.DateTimeField(auto_now_add=True)
-    oferta = models.ForeignKey(Oferta, related_name="rzuty", on_delete=models.CASCADE)
-    zdjecie = models.ImageField(upload_to="rzuty/")
+    zdjecie = models.ImageField(upload_to="inwestycje/", blank=True, null=True)
     numer_lokalu = models.CharField(max_length=50, blank=True, null=True, help_text="Numer lub nazwa lokalu")
     numer_oferty = models.CharField(max_length=100, unique=True, null=True, blank=True, verbose_name="Numer Oferty")
     rodzaj_lokalu = models.ForeignKey('RodzajLokalu', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Rodzaj Lokalu")
@@ -45,6 +44,9 @@ class Oferta(models.Model):
     def __str__(self):
         return f"{self.adres}, {self.id}, ({self.metraz} m², {self.pokoje} pok.)"
 
+class Rzut(models.Model):
+    oferta = models.ForeignKey(Oferta, related_name="rzuty", on_delete=models.CASCADE)
+    obraz = models.ImageField(upload_to="rzuty/")
 
 class Cena(models.Model):
     oferta = models.ForeignKey(Oferta, related_name="ceny", on_delete=models.CASCADE)
