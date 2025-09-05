@@ -503,6 +503,11 @@ function openRzutyGallery(ofertaId) {
   const inner = galleryEl.querySelector('.carousel-inner');
   const rzutyContainer = document.getElementById(`rzuty-data-${ofertaId}`);
 
+  const carouselEl = document.getElementById('rzutyGallery');
+  const carousel = new bootstrap.Carousel(carouselEl, {
+  interval: false,   // wyłącza automatyczne przewijanie
+  });
+
   // wyczyść poprzednie slajdy
   inner.innerHTML = '';
 
