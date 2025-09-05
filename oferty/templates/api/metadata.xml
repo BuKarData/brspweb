@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<otwarteDane xmlns="http://danepubliczne.gov.pl/otwarte-dane"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://danepubliczne.gov.pl/otwarte-dane https://www.dane.gov.pl/static/xml/otwarte_dane_latest.xsd">
+    
+    <zestawDanych>
+        <id>https://www.braspol.pl/api/data</id>
+        <tytul>Raport ofert nieruchomości BRASPOL</tytul>
+        <opis>Zestaw danych zawierający aktualne oferty nieruchomości publikowane przez BRASPOL</opis>
+        <slowaKluczowe>nieruchomości, oferty, ceny, mieszkania, domy</slowaKluczowe>
+        <czestotliwoscAktualizacji>dziennie</czestotliwoscAktualizacji>
+        <dataOstatniejAktualizacji>{{ current_date }}</dataOstatniejAktualizacji>
+        <licencja>http://creativecommons.org/licenses/by/3.0/pl/</licencja>
+        <zrodloDanych>BRASPOL Sp. z o.o.</zrodloDanych>
+        
+        <zasoby>
+            <zasob>
+                <format>application/ld+json</format>
+                <link>https://www.braspol.pl/api/data.jsonld</link>
+                <opis>Dane w formacie JSON-LD zgodnym ze schema.org</opis>
+            </zasob>
+            <zasob>
+                <format>text/csv</format>
+                <link>https://www.braspol.pl/api/data.csv</link>
+                <opis>Dane w formacie CSV</opis>
+            </zasob>
+            <zasob>
+                <format>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</format>
+                <link>https://www.braspol.pl/api/data.xlsx</link>
+                <opis>Dane w formacie Excel XLSX</opis>
+            </zasob>
+        </zasoby>
+        
+        <dostawcaDanych>
+            <nazwa>BRASPOL Sp. z o.o.</nazwa>
+            <email>dane@braspol.pl</email>
+            <stronaInternetowa>https://www.braspol.pl</stronaInternetowa>
+        </dostawcaDanych>
+    </zestawDanych>
+    
+</otwarteDane>

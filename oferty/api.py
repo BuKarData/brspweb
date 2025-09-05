@@ -7,6 +7,18 @@ from oferty.management.commands.raportuj import (
     generate_xlsx_data
 )
 
+from django.shortcuts import render
+
+def metadata_xml(request):
+    context = {
+        'current_date': datetime.now().strftime('%Y-%m-%d')
+    }
+    
+    # Renderuj szablon z folderu templates/api/
+    response = render(request, 'api/metadata.xml', context, content_type='application/xml')
+    response['Last-Modified'] = datetime.now().strftime('%a, %d %b %Y %H:%M:%S GMT')
+    return response
+
 
 
 def data_api_view(request):
