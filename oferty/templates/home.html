@@ -385,19 +385,6 @@
             {% endfor %}
 
 
-
-            <div id="rzutyModal" class="image-modal">
-              <span class="close-modal" onclick="closeRzutyGallery()">&times;</span>
-              <div id="rzutyGallery" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner"></div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#rzutyGallery" data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon"></span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#rzutyGallery" data-bs-slide="next">
-                  <span class="carousel-control-next-icon"></span>
-                </button>
-              </div>
-            </div>
             
 
             {% if inwestycja.standard %}
@@ -413,7 +400,19 @@
     {% empty %}
       <p>Brak inwestycji</p>
     {% endfor %}
-
+   
+    <div id="rzutyModal" class="image-modal">
+      <span class="close-modal" onclick="closeRzutyGallery()">&times;</span>
+      <div id="rzutyGallery" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner"></div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#rzutyGallery" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#rzutyGallery" data-bs-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </button>
+      </div>
+    </div>
 
 
 <!-- Modal na rzut oferty -->
