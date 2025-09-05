@@ -245,6 +245,9 @@
   font-size: 0.875rem;
 }
 
+/* Layout modala rzutów */
+#rzutyModal .carousel { width: 90%; max-width: 1000px; }
+#rzutyModal .carousel-inner img { max-height: 80vh; object-fit: contain; }
 
 
   </style>
@@ -361,32 +364,41 @@
                      <span class="text-muted">Brak ceny</span>
                  {% endif %}
 
-                 {% if oferta.rzuty.all %}
-                    <div class="mt-2">
-                    <button class="btn btn-sm btn-hover-fill" onclick="openRzutyGallery('{{ oferta.id }}')">
-                    Zobacz rzuty
-                    </button>
-                    </div>
-                 {% endif %}
+                 {% if oferta.rzuty.count %}
+                 <div class="mt-2">
+                   <button type="button" class="btn btn-sm btn-hover-fill" onclick="openRzutyGallery('{{ oferta.id }}')">
+                     Zobacz rzuty
+                   </button>
+                 </div>
+               {% endif %}
+               
+               <!-- Ukryty pakiet źródeł rzutów dla JS -->
+               <div id="rzuty-data-{{ oferta.id }}" style="display:none;">
+                {% for rzut in oferta.rzuty.all %}
+                  <img src="{{ rzut.obraz.url }}" alt="Rzut {{ forloop.counter }}">
+                {% endfor %}
+              </div>
+               
 
-                 <div id="rzuty-data-{{ oferta.id }}" style="display:none;">
-                  {% for rzut in oferta.rzuty.all %}
-                    <img src="{{ rzut.obraz.url }}" alt="Rzut {{ forloop.counter }}">
-                  {% endfor %}
-                </div>
-                
-                <div id="rzutyModal" class="image-modal">
-                  <span class="close-modal" onclick="closeRzutyGallery()">&times;</span>
-                  <div id="rzutyGallery" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner"></div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#rzutyGallery" data-bs-slide="prev">
-                      <span class="carousel-control-prev-icon"></span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#rzutyGallery" data-bs-slide="next">
-                      <span class="carousel-control-next-icon"></span>
-                    </button>
-                  </div>
-                </div>
+
+
+<!-- Modal na galerię rzutów (globalny) -->
+<div id="rzutyModal" class="image-modal">
+  <span class="close-modal" onclick="closeRzutyGallery()">&times;</span>
+  <div id="rzutyGallery" class="carousel slide" data-bs-interval="false">
+    <div class="carousel-inner"></div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#rzutyGallery" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Poprzedni</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#rzutyGallery" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Następny</span>
+    </button>
+  </div>
+</div>
+
+
                 
 
                
@@ -496,26 +508,32 @@ function scrollGallery(button, direction) {
 
 function openRzutyGallery(ofertaId) {
   const modal = document.getElementById('rzutyModal');
-  const inner = modal.querySelector('.carousel-inner');
+  const galleryEl = document.getElementById('rzutyGallery');
+  const inner = galleryEl.querySelector('.carousel-inner');
   const rzutyContainer = document.getElementById(`rzuty-data-${ofertaId}`);
 
-  // wyczyść stare zdjęcia
+  // wyczyść poprzednie slajdy
   inner.innerHTML = '';
 
-  // wstaw nowe zdjęcia jako elementy karuzeli
   if (rzutyContainer) {
     const imgs = rzutyContainer.querySelectorAll('img');
+    if (imgs.length === 0) return;
+
     imgs.forEach((img, index) => {
       const item = document.createElement('div');
-      item.classList.add('carousel-item');
-      if (index === 0) item.classList.add('active'); // pierwszy aktywny
-      const clone = img.cloneNode();
-      clone.classList.add('d-block', 'w-100');
-      clone.style.maxHeight = '80vh';
-      clone.style.objectFit = 'contain';
-      item.appendChild(clone);
+      item.className = 'carousel-item' + (index === 0 ? ' active' : '');
+      const slideImg = document.createElement('img');
+      slideImg.src = img.src;
+      slideImg.alt = img.alt || ('Rzut ' + (index + 1));
+      slideImg.className = 'd-block w-100';
+      item.appendChild(slideImg);
       inner.appendChild(item);
     });
+
+    // Zresetuj/utwórz instancję Bootstrapa po wstrzyknięciu slajdów
+    const existing = bootstrap.Carousel.getInstance(galleryEl);
+    if (existing) existing.dispose();
+    new bootstrap.Carousel(galleryEl, { interval: false, ride: false });
   }
 
   modal.style.display = 'flex';
@@ -527,6 +545,7 @@ function closeRzutyGallery() {
   modal.classList.remove('show');
   setTimeout(() => modal.style.display = 'none', 300);
 }
+
 
 
 
