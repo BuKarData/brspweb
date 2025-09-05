@@ -73,10 +73,12 @@ class OfertyAPIView(APIView):
 
 def home(request):
     ceny_prefetch = Prefetch('ceny', queryset=Cena.objects.order_by('data'))
-    
     inwestycje = Inwestycja.objects.prefetch_related(
-        Prefetch('oferty', queryset=Oferta.objects.prefetch_related(ceny_prefetch))
-    ).order_by('-data_dodania')
+    Prefetch(
+        'oferty',
+        queryset=Oferta.objects.prefetch_related(ceny_prefetch, 'rzuty')
+    )
+).order_by('-data_dodania')
 
     # Przygotowanie danych dla każdej oferty
     for inwestycja in inwestycje:
