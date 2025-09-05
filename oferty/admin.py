@@ -7,7 +7,8 @@ from .models import (
     RodzajLokalu,
     PomieszczeniePrzynalezne,
     SwiadczeniePieniezne,
-    Rabat
+    Rabat,
+    Rzut
 )
 
 @admin.register(RodzajLokalu)
@@ -35,6 +36,10 @@ class InwestycjaZdjecieInline(admin.TabularInline):
 
     def inwestycja_nazwa(self, obj):
         return obj.inwestycja.nazwa if obj.inwestycja else "Brak inwestycji"
+
+class RzutInline(admin.TabularInline):  # albo StackedInline dla kart zamiast tabeli
+    model = Rzut
+    extra = 1  # ile pustych formularzy ma się pojawiać na start
 
 @admin.register(Inwestycja)
 class InwestycjaAdmin(admin.ModelAdmin):
@@ -77,6 +82,7 @@ class OfertaAdmin(admin.ModelAdmin):
         PomieszczeniePrzynalezneInline,
         SwiadczeniePieniezneInline,
         RabatInline,
+        RzutInline,
     ]
     list_display = (
         "numer_lokalu",
@@ -86,6 +92,7 @@ class OfertaAdmin(admin.ModelAdmin):
         "status",
         "rodzaj_lokalu",
         "data_dodania"
+
     )
     list_filter = ("status", "rodzaj_lokalu")
     search_fields = ("numer_lokalu", "numer_oferty")
@@ -107,7 +114,8 @@ class OfertaAdmin(admin.ModelAdmin):
             "fields": ("adres",)
         }),
     )
-
+class RzutAdmin(admin.ModelAdmin):
+    list_display = ("id", "oferta", "zdjecie")
 
 @admin.register(Cena)
 class CenaAdmin(admin.ModelAdmin):
