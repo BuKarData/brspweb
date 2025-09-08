@@ -10,9 +10,9 @@ import io
 def get_deweloper_data():
     """Zwraca dane dewelopera"""
     return {
-        "nip": "8261116680",
-        "regon": "540649478",
-        "nazwa_firmy": "B.Z-BUD Beata Żochowska",
+        "nip": "1250994717",
+        "regon": "141371661",
+        "nazwa_firmy": "BRASPOL PAWEŁ WIĘCH",
         "wojewodztwo": "MAZOWIECKIE",
         "powiat": "wołomiński",
         "gmina": "Zielonka",
