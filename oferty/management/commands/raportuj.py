@@ -231,8 +231,8 @@ def generate_jsonld_data():
     jsonld_data = {
         "@context": jsonld_context,
         "@type": "Dataset",
-        "name": "Raport ofert deweloperskich B.Z-BUD",
-        "description": "Zestaw ofert mieszkaniowych dewelopera B.Z-BUD Beata Żochowska",
+        "name": "Raport ofert deweloperskich BRASPOL Paweł Więch",
+        "description": "Zestaw ofert mieszkaniowych dewelopera BRASPOL Paweł Więch",
         "dateModified": current_date,
         "publisher": {
             "@type": "Organization",
@@ -281,12 +281,12 @@ class Command(BaseCommand):
         
         # Zapisz CSV
         csv_content = generate_csv_data()
-        with open(f"{raporty_dir}/Raport ofert firmy BZ-Bud_{data_raportu}.csv", "w", encoding="utf-8-sig") as f:
+        with open(f"{raporty_dir}/Raport ofert firmy Braspol_{data_raportu}.csv", "w", encoding="utf-8-sig") as f:
             f.write(csv_content)
         
         # Zapisz XLSX
         xlsx_content = generate_xlsx_data()
-        with open(f"{raporty_dir}/Raport ofert firmy BZ-Bud_{data_raportu}.xlsx", "wb") as f:
+        with open(f"{raporty_dir}/Raport ofert firmy Braspol_{data_raportu}.xlsx", "wb") as f:
             f.write(xlsx_content)
         
         # Zapisz JSON-LD
