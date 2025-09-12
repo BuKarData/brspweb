@@ -1,41 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<otwarteDane xmlns="http://danepubliczne.gov.pl/otwarte-dane"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="http://danepubliczne.gov.pl/otwarte-dane https://www.dane.gov.pl/static/xml/otwarte_dane_latest.xsd">
-    
-    <zestawDanych>
-        <id>https://www.braspol.pl/api/data</id>
-        <tytul>Raport ofert nieruchomości BRASPOL</tytul>
-        <opis>Zestaw danych zawierający aktualne oferty nieruchomości publikowane przez BRASPOL</opis>
-        <slowaKluczowe>nieruchomości, oferty, ceny, mieszkania, domy</slowaKluczowe>
-        <czestotliwoscAktualizacji>dziennie</czestotliwoscAktualizacji>
-        <dataOstatniejAktualizacji>{{ current_date }}</dataOstatniejAktualizacji>
-        <licencja>http://creativecommons.org/licenses/by/3.0/pl/</licencja>
-        <zrodloDanych>BRASPOL Sp. z o.o.</zrodloDanych>
-        
-        <zasoby>
-            <zasob>
+<datasets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="https://www.dane.gov.pl/static/xml/otwarte_dane_latest.xsd">
+
+    <dataset>
+        <datasetId>braspol-oferty-nieruchomosci-{{ current_date_nodash }}</datasetId>
+        <title>Raport ofert nieruchomości BRASPOL</title>
+        <description>
+            <polish>Dane dotyczące aktualnych ofert nieruchomości dewelopera BRASPOL Sp. z o.o. udostępnione {{ current_date }} zgodnie z obowiązującymi przepisami.</polish>
+        </description>
+        <categories>
+            <category>ECON</category>
+        </categories>
+        <tags>
+            <tag>nieruchomosci</tag>
+            <tag>oferty</tag>
+            <tag>ceny</tag>
+            <tag>mieszkania</tag>
+            <tag>domy</tag>
+        </tags>
+        <conditions>
+            <source>true</source>
+            <modification>false</modification>
+        </conditions>
+        <updateFrequency>daily</updateFrequency>
+
+        <resources>
+            <resource>
+                <resourceId>braspol-jsonld</resourceId>
+                <title>Ceny nieruchomości - JSON-LD</title>
+                <description>
+                    <polish>Dane w formacie JSON-LD zgodnym ze schema.org</polish>
+                </description>
                 <format>application/ld+json</format>
-                <link>https://www.braspol.pl/api/data.jsonld</link>
-                <opis>Dane w formacie JSON-LD zgodnym ze schema.org</opis>
-            </zasob>
-            <zasob>
+                <url>https://www.braspol.pl/api/data.jsonld</url>
+                <availability>remote</availability>
+                <dataDate>{{ current_date }}</dataDate>
+                <lastUpdateDate>{{ current_date }}T00:00:00+02:00</lastUpdateDate>
+                <hasDynamicData>false</hasDynamicData>
+                <hasHighValueData>false</hasHighValueData>
+                <hasHighValueDataFromEuropeanCommissionList>false</hasHighValueDataFromEuropeanCommissionList>
+                <hasResearchData>false</hasResearchData>
+            </resource>
+            <resource>
+                <resourceId>braspol-csv</resourceId>
+                <title>Ceny nieruchomości - CSV</title>
+                <description>
+                    <polish>Dane w formacie CSV</polish>
+                </description>
                 <format>text/csv</format>
-                <link>https://www.braspol.pl/api/data.csv</link>
-                <opis>Dane w formacie CSV</opis>
-            </zasob>
-            <zasob>
+                <url>https://www.braspol.pl/api/data.csv</url>
+                <availability>remote</availability>
+                <dataDate>{{ current_date }}</dataDate>
+                <lastUpdateDate>{{ current_date }}T00:00:00+02:00</lastUpdateDate>
+                <hasDynamicData>false</hasDynamicData>
+                <hasHighValueData>false</hasHighValueData>
+                <hasHighValueDataFromEuropeanCommissionList>false</hasHighValueDataFromEuropeanCommissionList>
+                <hasResearchData>false</hasResearchData>
+            </resource>
+            <resource>
+                <resourceId>braspol-xlsx</resourceId>
+                <title>Ceny nieruchomości - Excel XLSX</title>
+                <description>
+                    <polish>Dane w formacie Excel XLSX</polish>
+                </description>
                 <format>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</format>
-                <link>https://www.braspol.pl/api/data.xlsx</link>
-                <opis>Dane w formacie Excel XLSX</opis>
-            </zasob>
-        </zasoby>
-        
-        <dostawcaDanych>
-            <nazwa>BRASPOL Sp. z o.o.</nazwa>
+                <url>https://www.braspol.pl/api/data.xlsx</url>
+                <availability>remote</availability>
+                <dataDate>{{ current_date }}</dataDate>
+                <lastUpdateDate>{{ current_date }}T00:00:00+02:00</lastUpdateDate>
+                <hasDynamicData>false</hasDynamicData>
+                <hasHighValueData>false</hasHighValueData>
+                <hasHighValueDataFromEuropeanCommissionList>false</hasHighValueDataFromEuropeanCommissionList>
+                <hasResearchData>false</hasResearchData>
+            </resource>
+        </resources>
+
+        <provider>
+            <name>BRASPOL Sp. z o.o.</name>
             <email>dane@braspol.pl</email>
-            <stronaInternetowa>https://www.braspol.pl</stronaInternetowa>
-        </dostawcaDanych>
-    </zestawDanych>
-    
-</otwarteDane>
+            <website>https://www.braspol.pl</website>
+        </provider>
+
+    </dataset>
+
+</datasets>
