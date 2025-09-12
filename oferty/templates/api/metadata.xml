@@ -37,7 +37,7 @@
                 <dataDate>{{ current_date }}</dataDate>
                 <lastUpdateDate>{{ current_date }}T00:00:00+02:00</lastUpdateDate>
                 <hasDynamicData>false</hasDynamicData>
-                <hasHighValueData>false</hasHighValueData>
+                <hasHighValueData>true</hasHighValueData>
                 <hasHighValueDataFromEuropeanCommissionList>false</hasHighValueDataFromEuropeanCommissionList>
                 <hasResearchData>false</hasResearchData>
             </resource>
@@ -53,7 +53,7 @@
                 <dataDate>{{ current_date }}</dataDate>
                 <lastUpdateDate>{{ current_date }}T00:00:00+02:00</lastUpdateDate>
                 <hasDynamicData>false</hasDynamicData>
-                <hasHighValueData>false</hasHighValueData>
+                <hasHighValueData>true</hasHighValueData>
                 <hasHighValueDataFromEuropeanCommissionList>false</hasHighValueDataFromEuropeanCommissionList>
                 <hasResearchData>false</hasResearchData>
             </resource>
