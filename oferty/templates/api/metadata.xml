@@ -25,52 +25,60 @@
         <updateFrequency>daily</updateFrequency>
 
         <resources>
-            <resource>
-                <resourceId>braspol-jsonld</resourceId>
-                <title>Ceny nieruchomości - JSON-LD</title>
+            <resource status="published">
+                <extIdent>braspol-jsonld</extIdent>
+                <title>
+                    <polish>Ceny nieruchomości - JSON-LD</polish>
+                </title>
                 <description>
                     <polish>Dane w formacie JSON-LD zgodnym ze schema.org</polish>
                 </description>
                 <format>application/ld+json</format>
                 <url>https://www.braspol.pl/api/data.jsonld</url>
+                <md5>da1985a9aca80a7042c82fad0bc06f36</md5>
                 <availability>remote</availability>
                 <dataDate>{{ current_date }}</dataDate>
                 <lastUpdateDate>{{ current_date }}T00:00:00+02:00</lastUpdateDate>
                 <hasDynamicData>false</hasDynamicData>
                 <hasHighValueData>true</hasHighValueData>
-                <hasHighValueDataFromEuropeanCommissionList>false</hasHighValueDataFromEuropeanCommissionList>
                 <hasResearchData>false</hasResearchData>
             </resource>
-            <resource>
-                <resourceId>braspol-csv</resourceId>
-                <title>Ceny nieruchomości - CSV</title>
+
+            <resource status="published">
+                <extIdent>braspol-csv</extIdent>
+                <title>
+                    <polish>Ceny nieruchomości - CSV</polish>
+                </title>
                 <description>
                     <polish>Dane w formacie CSV</polish>
                 </description>
                 <format>text/csv</format>
                 <url>https://www.braspol.pl/api/data.csv</url>
+                <md5>ecaa88f7fa0bf610a5a26cf545dcd3aa</md5>
                 <availability>remote</availability>
                 <dataDate>{{ current_date }}</dataDate>
                 <lastUpdateDate>{{ current_date }}T00:00:00+02:00</lastUpdateDate>
                 <hasDynamicData>false</hasDynamicData>
                 <hasHighValueData>true</hasHighValueData>
-                <hasHighValueDataFromEuropeanCommissionList>false</hasHighValueDataFromEuropeanCommissionList>
                 <hasResearchData>false</hasResearchData>
             </resource>
-            <resource>
-                <resourceId>braspol-xlsx</resourceId>
-                <title>Ceny nieruchomości - Excel XLSX</title>
+
+            <resource status="published">
+                <extIdent>braspol-xlsx</extIdent>
+                <title>
+                    <polish>Ceny nieruchomości - Excel XLSX</polish>
+                </title>
                 <description>
                     <polish>Dane w formacie Excel XLSX</polish>
                 </description>
                 <format>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</format>
                 <url>https://www.braspol.pl/api/data.xlsx</url>
+                <md5>c5c6f31e26b2ba9935107d5efd62b416</md5>
                 <availability>remote</availability>
                 <dataDate>{{ current_date }}</dataDate>
                 <lastUpdateDate>{{ current_date }}T00:00:00+02:00</lastUpdateDate>
                 <hasDynamicData>false</hasDynamicData>
                 <hasHighValueData>true</hasHighValueData>
-                <hasHighValueDataFromEuropeanCommissionList>false</hasHighValueDataFromEuropeanCommissionList>
                 <hasResearchData>false</hasResearchData>
             </resource>
         </resources>
@@ -80,7 +88,6 @@
             <email>dane@braspol.pl</email>
             <website>https://www.braspol.pl</website>
         </provider>
-
     </dataset>
 
 </datasets>
