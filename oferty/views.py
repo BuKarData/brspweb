@@ -75,16 +75,13 @@ class OfertyAPIView(APIView):
         return Response(wynik, status=status.HTTP_200_OK)
     
 def metadata_xml(request):
-    # pełna ścieżka do pliku metadata.xml w folderze oferty
-    xml_path = os.path.join(os.path.dirname(__file__), 'metadata.xml')
+    # Ścieżka do wygenerowanego pliku
+    file_path = os.path.join(BASE_DIR, 'oferty', 'api', 'metadata.xml')
     
-    if not os.path.exists(xml_path):
-        return HttpResponse("Plik metadata.xml nie istnieje", status=404)
+    with open(file_path, 'r', encoding='utf-8') as f:
+        xml_content = f.read()
     
-    with open(xml_path, 'r', encoding='utf-8') as f:
-        content = f.read()
-    
-    return HttpResponse(content, content_type='application/xml')
+    return HttpResponse(xml_content, content_type='application/xml')
 
 
 def home(request):
