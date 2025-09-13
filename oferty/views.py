@@ -12,6 +12,7 @@ from datetime import datetime
 from jinja2 import Environment, FileSystemLoader
 from django.shortcuts import render
 from django.http import HttpResponse
+import os
 
 def home(request):
     return HttpResponse("Strona główna działa!")
