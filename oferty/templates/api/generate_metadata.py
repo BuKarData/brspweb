@@ -23,6 +23,7 @@ def md5sum(path: str) -> str:
     """Zwraca sumę MD5 pliku lub pusty string jeśli plik nie istnieje."""
     full_path = os.path.join(REPORTS_DIR, path)
     if not os.path.exists(full_path):
+        print(f"[WARNING] Plik nie istnieje: {full_path}")
         return ""
     with open(full_path, "rb") as f:
         return hashlib.md5(f.read()).hexdigest()
@@ -31,6 +32,7 @@ class Command(BaseCommand):
     help = "Generuje plik metadata.xml w oferty/api"
 
     def handle(self, *args, **kwargs):
+        # Lista raportów z MD5
         reports = []
         for id_, file, fmt, title in reports_files:
             reports.append({
@@ -44,8 +46,18 @@ class Command(BaseCommand):
                 "md5": md5sum(file),
             })
 
-        # Jinja2 – folder szablonu: oferty/templates/api
+        # Ścieżka do folderu z szablonem
         template_dir = os.path.join(settings.BASE_DIR, "oferty", "templates", "api")
+        print(f"[DEBUG] Template directory: {template_dir}")
+        if not os.path.exists(template_dir):
+            raise FileNotFoundError(f"Folder ze szablonem nie istnieje: {template_dir}")
+
+        files_in_dir = os.listdir(template_dir)
+        print(f"[DEBUG] Pliki w folderze: {files_in_dir}")
+        if "metadata_template.xml" not in files_in_dir:
+            raise FileNotFoundError(f"Plik metadata_template.xml nie istnieje w {template_dir}")
+
+        # Wczytanie szablonu
         env = Environment(loader=FileSystemLoader(template_dir))
         template = env.get_template("metadata_template.xml")
 
