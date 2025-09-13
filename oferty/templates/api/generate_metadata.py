@@ -44,9 +44,15 @@ output_xml = template.render(
     reports=reports
 )
 
+# Folder docelowy: oferty/api
+output_folder = os.path.join(BASE_DIR, 'oferty', 'api')
+os.makedirs(output_folder, exist_ok=True)  # utworzy folder jeśli nie istnieje
+
+# Pełna ścieżka do pliku
+output_file = os.path.join(output_folder, 'metadata.xml')
+
 # Zapis gotowego metadata.xml
-output_file = os.path.join(BASE_DIR, '../metadata.xml')
 with open(output_file, 'w', encoding='utf-8') as f:
     f.write(output_xml)
 
-print(f"metadata.xml wygenerowany z aktualną datą {current_date}")
+print(f"metadata.xml wygenerowany w {output_folder} z aktualną datą {current_date}")
