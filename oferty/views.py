@@ -77,11 +77,10 @@ class OfertyAPIView(APIView):
         return Response(wynik, status=status.HTTP_200_OK)
     
 def metadata_xml(request):
-    file_path = os.path.join(settings.BASE_DIR, "oferty", "api", "metadata.xml")
+    file_path = os.path.join(os.path.dirname(__file__), "templates", "api", "metadata.xml")
     if not os.path.exists(file_path):
-        raise Http404("metadata.xml nie istnieje. Uruchom: python manage.py generate_metadata")
-    return FileResponse(open(file_path, "rb"), content_type="application/xml")
-
+        raise Http404("metadata.xml nie istnieje")
+    return FileResponse(open(file_path, 'rb'), content_type='application/xml')
 def home(request):
     # Prefetch dla cen i rzutów w ofertach
     ceny_prefetch = Prefetch('ceny', queryset=Cena.objects.order_by('data'))
