@@ -75,67 +75,16 @@ class OfertyAPIView(APIView):
         return Response(wynik, status=status.HTTP_200_OK)
     
 def metadata_xml(request):
-    """
-    Dynamiczne generowanie pliku metadata.xml z raportami i md5
-    """
-
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    REPORTS_DIR = os.path.join(BASE_DIR, '..', 'raporty')  # folder z raportami
-    TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')      # folder z metadata_template.xml
-    TEMPLATE_FILE = 'metadata_template.xml'                # Twój szablon Jinja2
-
-    # --- Funkcja do MD5 ---
-    def md5sum(filepath):
-        with open(filepath, "rb") as f:
-            return hashlib.md5(f.read()).hexdigest()
-
-    # --- Pliki raportów ---
-    files = [
-        "raport_2025-09-13.jsonld",
-        "Raport ofert firmy Braspol_2025-09-13.csv",
-        "Raport ofert firmy Braspol_2025-09-13.xlsx"
-    ]
-
-    current_date = datetime.now().strftime("%Y-%m-%d")
-    current_date_nodash = datetime.now().strftime("%Y%m%d")
-
-    resources = [
-        {
-            "extIdent": "braspol-jsonld",
-            "title": "Ceny nieruchomości - JSON-LD",
-            "description": "Dane w formacie JSON-LD zgodnym ze schema.org",
-            "format": "application/ld+json",
-            "url": f"https://www.braspol.pl/api/{files[0]}",
-            "md5": md5sum(os.path.join(REPORTS_DIR, files[0])),
-        },
-        {
-            "extIdent": "braspol-csv",
-            "title": "Ceny nieruchomości - CSV",
-            "description": "Dane w formacie CSV",
-            "format": "text/csv",
-            "url": f"https://www.braspol.pl/api/{files[1]}",
-            "md5": md5sum(os.path.join(REPORTS_DIR, files[1])),
-        },
-        {
-            "extIdent": "braspol-xlsx",
-            "title": "Ceny nieruchomości - Excel XLSX",
-            "description": "Dane w formacie Excel XLSX",
-            "format": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            "url": f"https://www.braspol.pl/api/{files[2]}",
-            "md5": md5sum(os.path.join(REPORTS_DIR, files[2])),
-        }
-    ]
-
-    # --- Renderowanie szablonu ---
-    env = Environment(loader=FileSystemLoader(TEMPLATE_DIR))
-    template = env.get_template(TEMPLATE_FILE)
-    xml_content = template.render(
-        current_date=current_date,
-        current_date_nodash=current_date_nodash,
-        resources=resources
-    )
-
-    return HttpResponse(xml_content, content_type="application/xml")
+    # pełna ścieżka do pliku metadata.xml w folderze oferty
+    xml_path = os.path.join(os.path.dirname(__file__), 'metadata.xml')
+    
+    if not os.path.exists(xml_path):
+        return HttpResponse("Plik metadata.xml nie istnieje", status=404)
+    
+    with open(xml_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+    
+    return HttpResponse(content, content_type='application/xml')
 
 
 def home(request):
