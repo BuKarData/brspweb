@@ -7,12 +7,11 @@ from .models import Oferta, Cena, Inwestycja
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-import hashlib
-from datetime import datetime
-from jinja2 import Environment, FileSystemLoader
 from django.shortcuts import render
 from django.http import HttpResponse
 import os
+from django.conf import settings
+
 
 def home(request):
     return HttpResponse("Strona główna działa!")
@@ -75,9 +74,10 @@ class OfertyAPIView(APIView):
 
         return Response(wynik, status=status.HTTP_200_OK)
     
+
 def metadata_xml(request):
     # Ścieżka do wygenerowanego pliku
-    file_path = os.path.join(BASE_DIR, 'oferty', 'api', 'metadata.xml')
+    file_path = os.path.join(settings.BASE_DIR, 'oferty', 'api', 'metadata.xml')
     
     with open(file_path, 'r', encoding='utf-8') as f:
         xml_content = f.read()
