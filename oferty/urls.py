@@ -5,9 +5,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 from .views import home, lista_ofert
 from .api import data_api_view, metadata_xml
-from django.views.static import serve
-import os
-
 
 urlpatterns = [
     path('', home, name='home'),
@@ -15,7 +12,7 @@ urlpatterns = [
     path('api/data.jsonld', data_api_view, name='data-jsonld'),
     path('api/data.csv', data_api_view, name='data-csv'),
     path('api/data.xlsx', data_api_view, name='data-xlsx'),
-    path('api/metadata.xml', metadata_xml, name='metadata_xml'),
+    path('api/metadata.xml', metadata_xml, name='metadata-xml'),
 ]
 
 

@@ -7,21 +7,15 @@ from .models import Oferta, Cena, Inwestycja
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+# oferty/views.py
 from django.shortcuts import render
 from django.http import HttpResponse
-import os
-from django.conf import settings
-from django.http import FileResponse, Http404
-from django.conf import settings
-
 
 def home(request):
     return HttpResponse("Strona główna działa!")
 
 def lista_ofert(request):
     return HttpResponse("Lista ofert działa!")
-
-
 
 class OfertyAPIView(APIView):
     """
@@ -75,15 +69,7 @@ class OfertyAPIView(APIView):
             wynik.append(rekord)
 
         return Response(wynik, status=status.HTTP_200_OK)
-    
-def metadata_xml(request):
 
-    xml_file_path = os.path.join(settings.BASE_DIR, "oferty", "templates", "api", "metadata.xml")
-    if not os.path.exists(xml_file_path):
-        return HttpResponse("Plik metadata.xml nie istnieje. Wygeneruj go najpierw.", status=404)
-    with open(xml_file_path, "r", encoding="utf-8") as f:
-        xml_content = f.read()
-    return HttpResponse(xml_content, content_type="application/xml")
 
 def home(request):
     # Prefetch dla cen i rzutów w ofertach
