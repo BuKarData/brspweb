@@ -74,16 +74,49 @@ class OfertyAPIView(APIView):
 
         return Response(wynik, status=status.HTTP_200_OK)
     
-
 def metadata_xml(request):
-    # Ścieżka do wygenerowanego pliku
-    file_path = os.path.join(settings.BASE_DIR, 'oferty', 'api', 'metadata.xml')
-    
-    with open(file_path, 'r', encoding='utf-8') as f:
-        xml_content = f.read()
-    
-    return HttpResponse(xml_content, content_type='application/xml')
+    BASE_DIR = os.path.dirname(__file__)
+    REPORTS_DIR = os.path.join(BASE_DIR, '..', '..', 'raporty')  # dostosuj do swojej ścieżki
 
+    # Lista raportów
+    reports_files = [
+        ("braspol-jsonld", "raport_2025-09-13.jsonld", "application/ld+json", "Ceny nieruchomości - JSON-LD"),
+        ("braspol-csv", "Raport ofert firmy Braspol_2025-09-13.csv", "text/csv", "Ceny nieruchomości - CSV"),
+        ("braspol-xlsx", "Raport ofert firmy Braspol_2025-09-13.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Ceny nieruchomości - Excel XLSX"),
+    ]
+
+    reports = []
+
+    def md5sum(path):
+        with open(os.path.join(REPORTS_DIR, path), "rb") as f:
+            return hashlib.md5(f.read()).hexdigest()
+
+    for id_, file, fmt, title in reports_files:
+        reports.append({
+            "id": id_,
+            "file": file,
+            "format": fmt,
+            "title": title,
+            "url": f"https://www.braspol.pl/api/{file}",
+            "availability": "remote",
+            "description": f"Dane w formacie {fmt}",
+            "md5": md5sum(file)
+        })
+
+    # Załaduj szablon metadata_template.xml
+    TEMPLATE_DIR = os.path.join(BASE_DIR)  # jeśli plik szablonu jest w oferty/api
+    env = Environment(loader=FileSystemLoader(TEMPLATE_DIR))
+    template = env.get_template("metadata_template.xml")
+
+    # Wyrenderuj XML
+    xml_content = template.render(
+        current_date=datetime.now().strftime("%Y-%m-%d"),
+        current_date_nodash=datetime.now().strftime("%Y%m%d"),
+        reports=reports
+    )
+
+    # Zwróć jako XML (tak samo jak JSONLD)
+    return HttpResponse(xml_content, content_type="application/xml") 
 
 def home(request):
     # Prefetch dla cen i rzutów w ofertach
