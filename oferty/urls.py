@@ -8,7 +8,6 @@ from .api import data_api_view, metadata_xml
 from django.views.static import serve
 import os
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 urlpatterns = [
     path('', home, name='home'),
