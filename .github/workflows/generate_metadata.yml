@@ -1,0 +1,41 @@
+name: Generate Metadata
+
+# Harmonogram: codziennie o 1:15 UTC
+on:
+  schedule:
+    - cron: "15 1 * * *"
+
+  # Możesz też uruchomić manualnie:
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Pobierz kod repozytorium
+      - uses: actions/checkout@v3
+
+      # 2. Ustaw Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      # 3. Zainstaluj zależności
+      - name: Install dependencies
+        run: pip install jinja2
+
+      # 4. Wygeneruj metadata.xml
+      - name: Generate metadata.xml
+        run: python oferty/api/generate_metadata.py
+
+      # 5. Commit i push jeśli plik się zmienił
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add oferty/api/metadata.xml
+          git add oferty/raporty/*.md5
+          git diff-index --quiet HEAD || git commit -m "Update metadata.xml and MD5 [skip ci]"
+          git push
