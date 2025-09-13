@@ -11,6 +11,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import os
 from django.conf import settings
+from django.http import FileResponse, Http404
+from django.conf import settings
 
 
 def home(request):
