@@ -3,7 +3,7 @@ from datetime import datetime
 import hashlib
 from jinja2 import Environment, FileSystemLoader
 
-# BASE_DIR wskazuje na folder, w którym jest generate_metadata.py
+# Ścieżka do katalogu, w którym jest generate_metadata.py
 BASE_DIR = os.path.dirname(__file__)
 REPORTS_DIR = "/Users/kaponers/Downloads/Strony zarządzanie/braspol/raporty"
 
@@ -45,15 +45,11 @@ output_xml = template.render(
     reports=reports
 )
 
-# Folder docelowy: istniejący folder api w projekcie oferty
-output_folder = os.path.join(BASE_DIR, 'api')
-os.makedirs(output_folder, exist_ok=True)  # utworzy folder tylko jeśli go nie ma
-
-# Pełna ścieżka do pliku metadata.xml
-output_file = os.path.join(output_folder, 'metadata.xml')
+# Ścieżka do pliku w tym samym folderze co generate_metadata.py
+output_file = os.path.join(BASE_DIR, 'metadata.xml')
 
 # Zapis gotowego metadata.xml
 with open(output_file, 'w', encoding='utf-8') as f:
     f.write(output_xml)
 
-print(f"metadata.xml wygenerowany w {output_folder} z aktualną datą {current_date}")
+print(f"metadata.xml wygenerowany w {BASE_DIR} z aktualną datą {current_date}")
