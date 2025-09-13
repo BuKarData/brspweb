@@ -16,10 +16,7 @@ urlpatterns = [
     path('api/data.jsonld', data_api_view, name='data-jsonld'),
     path('api/data.csv', data_api_view, name='data-csv'),
     path('api/data.xlsx', data_api_view, name='data-xlsx'),
-    path('api/metadata.xml', serve, {
-        'document_root': os.path.join(BASE_DIR, 'oferty'),
-        'path': 'metadata.xml',
-    }),
+    path('api/metadata.xml', metadata_xml, name='metadata-xml'),
 ]
 
 
