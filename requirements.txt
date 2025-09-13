@@ -18,3 +18,4 @@ marshmallow
 requests>=2.30
 jsonlines>=3.1.0
 openpyxl==3.1.2
+Jinja2>=3.1
