@@ -2,7 +2,7 @@ import os
 import hashlib
 from datetime import datetime
 from jinja2 import Environment, FileSystemLoader
-from django.conf import settings
+
 
 # --- Ścieżki ---
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # folder oferty/templates/api

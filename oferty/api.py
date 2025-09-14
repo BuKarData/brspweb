@@ -8,6 +8,7 @@ from oferty.management.commands.raportuj import (
 )
 from django.http import FileResponse
 import os
+from django.conf import settings
 
 def metadata_xml(request):
     # Ścieżka do pliku w templates/api/
