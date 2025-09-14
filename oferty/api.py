@@ -6,18 +6,18 @@ from oferty.management.commands.raportuj import (
     generate_csv_data, 
     generate_xlsx_data
 )
-
-from django.shortcuts import render
+from django.http import FileResponse
+import os
 
 def metadata_xml(request):
-    context = {
-        'current_date': datetime.now().strftime('%Y-%m-%d')
-    }
+    # Ścieżka do wygenerowanego pliku metadata.xml
+    xml_file_path = os.path.join(os.path.dirname(__file__), 'metadata.xml')
     
-    # Renderuj szablon z folderu templates/api/
-    response = render(request, 'api/metadata.xml', context, content_type='application/xml')
-    response['Last-Modified'] = datetime.now().strftime('%a, %d %b %Y %H:%M:%S GMT')
-    return response
+    if os.path.exists(xml_file_path):
+        return FileResponse(open(xml_file_path, 'rb'), content_type='application/xml')
+    else:
+        from django.http import HttpResponseNotFound
+        return HttpResponseNotFound("Plik metadata.xml nie został jeszcze wygenerowany")
 
 
 

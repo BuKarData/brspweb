@@ -3,14 +3,25 @@
           xsi:noNamespaceSchemaLocation="https://www.dane.gov.pl/static/xml/otwarte_dane_latest.xsd">
 
     <dataset>
+        <!-- unikalny identyfikator -->
         <datasetId>braspol-oferty-nieruchomosci-{{ current_date_nodash }}</datasetId>
-        <title>Raport ofert nieruchomości BRASPOL</title>
+
+        <!-- tytuł zasobu -->
+        <title>
+            <polish>Raport ofert nieruchomości BRASPOL</polish>
+        </title>
+
+        <!-- opis -->
         <description>
             <polish>Dane dotyczące aktualnych ofert nieruchomości dewelopera BRASPOL Sp. z o.o. udostępnione {{ current_date }} zgodnie z obowiązującymi przepisami.</polish>
         </description>
+
+        <!-- kategorie -->
         <categories>
             <category>ECON</category>
         </categories>
+
+        <!-- tagi -->
         <tags>
             <tag>nieruchomosci</tag>
             <tag>oferty</tag>
@@ -18,18 +29,27 @@
             <tag>mieszkania</tag>
             <tag>domy</tag>
         </tags>
+
+        <!-- warunki -->
         <conditions>
             <source>true</source>
             <modification>false</modification>
         </conditions>
+
+        <!-- częstotliwość aktualizacji -->
         <updateFrequency>daily</updateFrequency>
 
+        <!-- zasoby -->
         <resources>
             {% for report in reports %}
             <resource status="published">
                 <extIdent>{{ report.id }}</extIdent>
-                <title><polish>{{ report.title }}</polish></title>
-                <description><polish>{{ report.description }}</polish></description>
+                <title>
+                    <polish>{{ report.title }}</polish>
+                </title>
+                <description>
+                    <polish>{{ report.description }}</polish>
+                </description>
                 <format>{{ report.format }}</format>
                 <url>{{ report.url }}</url>
                 <md5>{{ report.md5 }}</md5>
@@ -43,6 +63,7 @@
             {% endfor %}
         </resources>
 
+        <!-- dostawca -->
         <provider>
             <name>BRASPOL Sp. z o.o.</name>
             <email>dane@braspol.pl</email>

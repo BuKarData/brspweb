@@ -1,52 +1,85 @@
 import os
-from datetime import datetime
 import hashlib
+from datetime import datetime
 from jinja2 import Environment, FileSystemLoader
 
-BASE_DIR = os.path.dirname(__file__)
-REPORTS_DIR = "/Users/kaponers/Downloads/Strony zarządzanie/braspol/raporty"
+# --- Ścieżki ---
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # folder oferty/templates/api
+# Poprawiona ścieżka - cofamy się trzy poziomy do braspol/, potem do raporty/
+REPORTS_DIR = os.path.abspath(os.path.join(BASE_DIR, '..', '..', '..', 'raporty'))
+TEMPLATE_DIR = os.path.join(BASE_DIR)  # metadata_template.xml w tym samym folderze
+OUTPUT_XML = os.path.join(BASE_DIR, 'metadata.xml')  # zapis w oferty/templates/api/
 
-# Pliki raportów
-reports_files = [
-    ("braspol-jsonld", "raport_2025-09-13.jsonld", "application/ld+json", "Ceny nieruchomości - JSON-LD"),
-    ("braspol-csv", "Raport ofert firmy Braspol_2025-09-13.csv", "text/csv", "Ceny nieruchomości - CSV"),
-    ("braspol-xlsx", "Raport ofert firmy Braspol_2025-09-13.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Ceny nieruchomości - Excel XLSX"),
-]
-
-reports = []
-
-def md5sum(path):
-    with open(os.path.join(REPORTS_DIR, path), "rb") as f:
+# --- Funkcja do MD5 ---
+def md5sum(filepath):
+    if not os.path.exists(filepath):
+        print(f"⚠️ Plik nie istnieje: {filepath}")
+        return ""
+    with open(filepath, "rb") as f:
         return hashlib.md5(f.read()).hexdigest()
 
-for id_, file, fmt, title in reports_files:
-    reports.append({
-        "id": id_,
-        "file": file,
-        "format": fmt,
-        "title": title,
-        "url": f"https://www.braspol.pl/api/{file}",
-        "availability": "remote",
-        "description": f"Dane w formacie {fmt}",
-        "md5": md5sum(file)
-    })
+# --- Lista raportów ---
+files = {
+    "jsonld": "raport_2025-09-14.jsonld",
+    "csv": "Raport ofert firmy Braspol_2025-09-14.csv",
+    "xlsx": "Raport ofert firmy Braspol_2025-09-14.xlsx"
+}
 
+# --- Sprawdzenie ścieżki ---
+print(f"🔍 Szukam raportów w: {REPORTS_DIR}")
+if os.path.exists(REPORTS_DIR):
+    print("✅ Katalog raporty istnieje")
+    print("📋 Zawartość katalogu:")
+    for item in os.listdir(REPORTS_DIR):
+        print(f"  - {item}")
+else:
+    print("❌ Katalog raporty NIE istnieje!")
+
+# --- Dane dla Jinja ---
 current_date = datetime.now().strftime("%Y-%m-%d")
 current_date_nodash = datetime.now().strftime("%Y%m%d")
 
-# Wczytanie szablonu
-env = Environment(loader=FileSystemLoader(BASE_DIR))
-template = env.get_template("metadata_template.xml")
+reports = [
+    {
+        "id": "braspol-jsonld",
+        "title": "Ceny nieruchomości - JSON-LD",
+        "description": "Dane w formacie JSON-LD zgodnym ze schema.org",
+        "format": "application/ld+json",
+        "url": f"https://www.braspol.pl/api/{files['jsonld']}",
+        "md5": md5sum(os.path.join(REPORTS_DIR, files['jsonld'])),
+        "availability": "remote"
+    },
+    {
+        "id": "braspol-csv",
+        "title": "Ceny nieruchomości - CSV",
+        "description": "Dane w formacie CSV",
+        "format": "text/csv",
+        "url": f"https://www.braspol.pl/api/{files['csv']}",
+        "md5": md5sum(os.path.join(REPORTS_DIR, files['csv'])),
+        "availability": "remote"
+    },
+    {
+        "id": "braspol-xlsx",
+        "title": "Ceny nieruchomości - Excel XLSX",
+        "description": "Dane w formacie Excel XLSX",
+        "format": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "url": f"https://www.braspol.pl/api/{files['xlsx']}",
+        "md5": md5sum(os.path.join(REPORTS_DIR, files['xlsx'])),
+        "availability": "remote"
+    }
+]
 
-output_xml = template.render(
+# --- Renderowanie Jinja ---
+env = Environment(loader=FileSystemLoader(TEMPLATE_DIR))
+template = env.get_template('metadata_template.xml')
+xml_content = template.render(
     current_date=current_date,
     current_date_nodash=current_date_nodash,
     reports=reports
 )
 
-# Zapis gotowego metadata.xml
-output_file = os.path.join(BASE_DIR, '../metadata.xml')
-with open(output_file, 'w', encoding='utf-8') as f:
-    f.write(output_xml)
+# --- Zapis XML ---
+with open(OUTPUT_XML, "w", encoding="utf-8") as f:
+    f.write(xml_content)
 
-print(f"metadata.xml wygenerowany z aktualną datą {current_date}")
+print(f"✅ Plik metadata.xml został zapisany w {OUTPUT_XML}")
