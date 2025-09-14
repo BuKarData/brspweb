@@ -18,22 +18,12 @@ def md5sum(filepath):
     with open(filepath, "rb") as f:
         return hashlib.md5(f.read()).hexdigest()
 
-# --- Lista raportów ---
+# --- Lista raportów ze stałymi nazwami ---
 files = {
-    "jsonld": "raport_2025-09-14.jsonld",
-    "csv": "Raport ofert firmy Braspol_2025-09-14.csv",
-    "xlsx": "Raport ofert firmy Braspol_2025-09-14.xlsx"
+    "jsonld": "data.jsonld",
+    "csv": "data.csv", 
+    "xlsx": "data.xlsx"
 }
-
-# --- Sprawdzenie ścieżki ---
-print(f"🔍 Szukam raportów w: {REPORTS_DIR}")
-if os.path.exists(REPORTS_DIR):
-    print("✅ Katalog raporty istnieje")
-    print("📋 Zawartość katalogu:")
-    for item in os.listdir(REPORTS_DIR):
-        print(f"  - {item}")
-else:
-    print("❌ Katalog raporty NIE istnieje!")
 
 # --- Dane dla Jinja ---
 current_date = datetime.now().strftime("%Y-%m-%d")
@@ -45,8 +35,8 @@ reports = [
         "title": "Ceny nieruchomości - JSON-LD",
         "description": "Dane w formacie JSON-LD zgodnym ze schema.org",
         "format": "application/ld+json",
-        "url": f"https://www.braspol.pl/api/{files['jsonld']}",
-        "md5": md5sum(os.path.join(REPORTS_DIR, files['jsonld'])),
+        "url": f"https://www.braspol.pl/api/{files['jsonld']}", 
+        "md5": md5sum(os.path.join(REPORTS_DIR, "raport_2025-09-14.jsonld")),  # ale MD5 z aktualnego pliku
         "availability": "remote"
     },
     {
@@ -55,7 +45,7 @@ reports = [
         "description": "Dane w formacie CSV",
         "format": "text/csv",
         "url": f"https://www.braspol.pl/api/{files['csv']}",
-        "md5": md5sum(os.path.join(REPORTS_DIR, files['csv'])),
+        "md5": md5sum(os.path.join(REPORTS_DIR, "Raport ofert firmy Braspol_2025-09-14.csv")),
         "availability": "remote"
     },
     {
@@ -64,7 +54,7 @@ reports = [
         "description": "Dane w formacie Excel XLSX",
         "format": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         "url": f"https://www.braspol.pl/api/{files['xlsx']}",
-        "md5": md5sum(os.path.join(REPORTS_DIR, files['xlsx'])),
+        "md5": md5sum(os.path.join(REPORTS_DIR, "Raport ofert firmy Braspol_2025-09-14.xlsx")),
         "availability": "remote"
     }
 ]

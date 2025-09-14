@@ -10,8 +10,8 @@ from django.http import FileResponse
 import os
 
 def metadata_xml(request):
-    # Ścieżka do wygenerowanego pliku metadata.xml
-    xml_file_path = os.path.join(os.path.dirname(__file__), 'metadata.xml')
+    # Ścieżka do pliku w templates/api/
+    xml_file_path = os.path.join(settings.BASE_DIR, 'oferty', 'templates', 'api', 'metadata.xml')
     
     if os.path.exists(xml_file_path):
         return FileResponse(open(xml_file_path, 'rb'), content_type='application/xml')
