@@ -3,25 +3,18 @@
           xsi:noNamespaceSchemaLocation="https://www.dane.gov.pl/static/xml/otwarte_dane_latest.xsd">
 
     <dataset>
-        <!-- unikalny identyfikator -->
         <datasetId>braspol-oferty-nieruchomosci-20250914</datasetId>
-
-        <!-- tytuł zasobu -->
+        <version>1.0</version>
         <title>
             <polish>Raport ofert nieruchomości BRASPOL</polish>
         </title>
-
-        <!-- opis -->
         <description>
             <polish>Dane dotyczące aktualnych ofert nieruchomości dewelopera BRASPOL Sp. z o.o. udostępnione 2025-09-14 zgodnie z obowiązującymi przepisami.</polish>
         </description>
-
-        <!-- kategorie -->
+        <issued>2025-09-14</issued>
         <categories>
             <category>ECON</category>
         </categories>
-
-        <!-- tagi -->
         <tags>
             <tag>nieruchomosci</tag>
             <tag>oferty</tag>
@@ -29,17 +22,12 @@
             <tag>mieszkania</tag>
             <tag>domy</tag>
         </tags>
-
-        <!-- warunki -->
         <conditions>
             <source>true</source>
             <modification>false</modification>
         </conditions>
-
-        <!-- częstotliwość aktualizacji -->
         <updateFrequency>daily</updateFrequency>
 
-        <!-- zasoby -->
         <resources>
             
             <resource status="published">
@@ -55,7 +43,7 @@
                 <md5>c7fff521ef66f4fcc6f86f10aff58aea</md5>
                 <availability>remote</availability>
                 <dataDate>2025-09-14</dataDate>
-                <lastUpdateDate>2025-09-14T00:00:00+02:00</lastUpdateDate>
+                <lastUpdateDate>2025-09-14T00:00:00</lastUpdateDate>
                 <hasDynamicData>false</hasDynamicData>
                 <hasHighValueData>true</hasHighValueData>
                 <hasResearchData>false</hasResearchData>
@@ -74,7 +62,7 @@
                 <md5>ecaa88f7fa0bf610a5a26cf545dcd3aa</md5>
                 <availability>remote</availability>
                 <dataDate>2025-09-14</dataDate>
-                <lastUpdateDate>2025-09-14T00:00:00+02:00</lastUpdateDate>
+                <lastUpdateDate>2025-09-14T00:00:00</lastUpdateDate>
                 <hasDynamicData>false</hasDynamicData>
                 <hasHighValueData>true</hasHighValueData>
                 <hasResearchData>false</hasResearchData>
@@ -93,7 +81,7 @@
                 <md5>fde107858ef63c0a1c46bff0deb3a214</md5>
                 <availability>remote</availability>
                 <dataDate>2025-09-14</dataDate>
-                <lastUpdateDate>2025-09-14T00:00:00+02:00</lastUpdateDate>
+                <lastUpdateDate>2025-09-14T00:00:00</lastUpdateDate>
                 <hasDynamicData>false</hasDynamicData>
                 <hasHighValueData>true</hasHighValueData>
                 <hasResearchData>false</hasResearchData>
@@ -101,7 +89,6 @@
             
         </resources>
 
-        <!-- dostawca -->
         <provider>
             <name>BRASPOL Sp. z o.o.</name>
             <email>dane@braspol.pl</email>

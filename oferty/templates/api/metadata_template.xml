@@ -3,25 +3,18 @@
           xsi:noNamespaceSchemaLocation="https://www.dane.gov.pl/static/xml/otwarte_dane_latest.xsd">
 
     <dataset>
-        <!-- unikalny identyfikator -->
         <datasetId>braspol-oferty-nieruchomosci-{{ current_date_nodash }}</datasetId>
-
-        <!-- tytuł zasobu -->
+        <version>1.0</version>
         <title>
             <polish>Raport ofert nieruchomości BRASPOL</polish>
         </title>
-
-        <!-- opis -->
         <description>
             <polish>Dane dotyczące aktualnych ofert nieruchomości dewelopera BRASPOL Sp. z o.o. udostępnione {{ current_date }} zgodnie z obowiązującymi przepisami.</polish>
         </description>
-
-        <!-- kategorie -->
+        <issued>{{ current_date }}</issued>
         <categories>
             <category>ECON</category>
         </categories>
-
-        <!-- tagi -->
         <tags>
             <tag>nieruchomosci</tag>
             <tag>oferty</tag>
@@ -29,17 +22,12 @@
             <tag>mieszkania</tag>
             <tag>domy</tag>
         </tags>
-
-        <!-- warunki -->
         <conditions>
             <source>true</source>
             <modification>false</modification>
         </conditions>
-
-        <!-- częstotliwość aktualizacji -->
         <updateFrequency>daily</updateFrequency>
 
-        <!-- zasoby -->
         <resources>
             {% for report in reports %}
             <resource status="published">
@@ -55,7 +43,7 @@
                 <md5>{{ report.md5 }}</md5>
                 <availability>{{ report.availability }}</availability>
                 <dataDate>{{ current_date }}</dataDate>
-                <lastUpdateDate>{{ current_date }}T00:00:00+02:00</lastUpdateDate>
+                <lastUpdateDate>{{ current_date }}T00:00:00</lastUpdateDate>
                 <hasDynamicData>false</hasDynamicData>
                 <hasHighValueData>true</hasHighValueData>
                 <hasResearchData>false</hasResearchData>
@@ -63,7 +51,6 @@
             {% endfor %}
         </resources>
 
-        <!-- dostawca -->
         <provider>
             <name>BRASPOL Sp. z o.o.</name>
             <email>dane@braspol.pl</email>

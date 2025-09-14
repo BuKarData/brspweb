@@ -71,7 +71,7 @@ def _build_flattened_records(dane_dewelopera, oferty, max_pom, max_rab, max_swi)
         }
 
         for i, p in enumerate(oferta.pomieszczenia_przynalezne.all()):
-            rekord_csv[f"pomieszczenie_{i+1}"] = p.nazwa
+            rekord_csv[f"pomieszczenie przynalezne_{i+1}"] = p.nazwa
         for i, r in enumerate(oferta.rabaty.all()):
             rekord_csv[f"rabat_{i+1}"] = r.nazwa
         for i, s in enumerate(oferta.inne_swiadczenia.all()):
@@ -99,7 +99,7 @@ def generate_csv_data():
         "metraz", "pokoje", "status", "cena_pln", "cena_za_m2_pln", "data_ceny",
         "inwestycja_nazwa", "inwestycja_adres", "inwestycja_id",
     ]
-    fieldnames += [f"pomieszczenie_{i+1}" for i in range(max_pom)]
+    fieldnames += [f"pomieszczenie przynalezne_{i+1}" for i in range(max_pom)]
     fieldnames += [f"rabat_{i+1}" for i in range(max_rab)]
     fieldnames += [f"swiadczenie_{i+1}" for i in range(max_swi)]
 
@@ -144,7 +144,7 @@ def generate_xlsx_data():
         "metraz", "pokoje", "status", "cena_pln", "cena_za_m2_pln", "data_ceny",
         "inwestycja_nazwa", "inwestycja_adres", "inwestycja_id",
     ]
-    fieldnames += [f"pomieszczenie_{i+1}" for i in range(max_pom)]
+    fieldnames += [f"pomieszczenie przynalezne_{i+1}" for i in range(max_pom)]
     fieldnames += [f"rabat_{i+1}" for i in range(max_rab)]
     fieldnames += [f"swiadczenie_{i+1}" for i in range(max_swi)]
 
