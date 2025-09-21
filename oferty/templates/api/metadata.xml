@@ -3,15 +3,15 @@
           xsi:noNamespaceSchemaLocation="https://www.dane.gov.pl/static/xml/otwarte_dane_latest.xsd">
 
     <dataset>
-        <datasetId>braspol-oferty-nieruchomosci-20250920</datasetId>
+        <datasetId>braspol-oferty-nieruchomosci-20250921</datasetId>
         <version>1.0</version>
         <title>
             <polish>Raport ofert nieruchomości BRASPOL</polish>
         </title>
         <description>
-            <polish>Dane dotyczące aktualnych ofert nieruchomości dewelopera BRASPOL Sp. z o.o. udostępnione 2025-09-20 zgodnie z obowiązującymi przepisami.</polish>
+            <polish>Dane dotyczące aktualnych ofert nieruchomości dewelopera BRASPOL Sp. z o.o. udostępnione 2025-09-21 zgodnie z obowiązującymi przepisami.</polish>
         </description>
-        <issued>2025-09-20</issued>
+        <issued>2025-09-21</issued>
         <categories>
             <category>ECON</category>
         </categories>
@@ -42,8 +42,8 @@
                 <url>https://www.braspol.pl/api/data.jsonld</url>
                 <md5>c7fff521ef66f4fcc6f86f10aff58aea</md5>
                 <availability>remote</availability>
-                <dataDate>2025-09-20</dataDate>
-                <lastUpdateDate>2025-09-20T00:00:00</lastUpdateDate>
+                <dataDate>2025-09-21</dataDate>
+                <lastUpdateDate>2025-09-21T00:00:00</lastUpdateDate>
                 <hasDynamicData>false</hasDynamicData>
                 <hasHighValueData>true</hasHighValueData>
                 <hasResearchData>false</hasResearchData>
@@ -61,8 +61,8 @@
                 <url>https://www.braspol.pl/api/data.csv</url>
                 <md5>ecaa88f7fa0bf610a5a26cf545dcd3aa</md5>
                 <availability>remote</availability>
-                <dataDate>2025-09-20</dataDate>
-                <lastUpdateDate>2025-09-20T00:00:00</lastUpdateDate>
+                <dataDate>2025-09-21</dataDate>
+                <lastUpdateDate>2025-09-21T00:00:00</lastUpdateDate>
                 <hasDynamicData>false</hasDynamicData>
                 <hasHighValueData>true</hasHighValueData>
                 <hasResearchData>false</hasResearchData>
@@ -80,8 +80,8 @@
                 <url>https://www.braspol.pl/api/data.xlsx</url>
                 <md5>369f2fa982c0050c14e61893766f690a</md5>
                 <availability>remote</availability>
-                <dataDate>2025-09-20</dataDate>
-                <lastUpdateDate>2025-09-20T00:00:00</lastUpdateDate>
+                <dataDate>2025-09-21</dataDate>
+                <lastUpdateDate>2025-09-21T00:00:00</lastUpdateDate>
                 <hasDynamicData>false</hasDynamicData>
                 <hasHighValueData>true</hasHighValueData>
                 <hasResearchData>false</hasResearchData>
