@@ -20,23 +20,23 @@ def metadata_xml(request):
         from django.http import HttpResponseNotFound
         return HttpResponseNotFound("Plik metadata.xml nie został jeszcze wygenerowany")
 
-
-
 def data_api_view(request):
     try:
         if request.path.endswith('.jsonld'):
             data = generate_jsonld_data()
             json_data = json.dumps(data, ensure_ascii=False, indent=2)
             response = HttpResponse(json_data, content_type='application/ld+json; charset=utf-8')
+          
+            response['Content-Disposition'] = 'attachment; filename="data.jsonld"'
             
         elif request.path.endswith('.csv'):
             data = generate_csv_data()
-            # ZMIANA: Użyj BytesIO lub odpowiedniego encodingu
             response = HttpResponse(
                 data,
                 content_type='text/csv; charset=utf-8'
             )
-            response['Content-Disposition'] = 'inline; filename="raport.csv"'
+        
+            response['Content-Disposition'] = 'attachment; filename="data.csv"'
             response['Content-Encoding'] = 'utf-8'
             
         elif request.path.endswith('.xlsx'):
@@ -45,7 +45,7 @@ def data_api_view(request):
                 data,
                 content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
             )
-            response['Content-Disposition'] = 'inline; filename="raport.xlsx"'
+            response['Content-Disposition'] = 'attachment; filename="data.xlsx"'
             
         else:
             return HttpResponse('Format not supported', status=400, content_type='text/plain')
